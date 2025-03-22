@@ -1,0 +1,587 @@
+UseCaseModel JPetStore {
+
+	UC::login()
+	UC::userManagement() definedBySSD(UserManagementSSD) relatedService(UserManagementService)
+	UC::productManagement() definedBySSD(ProductManagementSSD) relatedService(ProductManagementService)
+	UC::orderManagement() definedBySSD(OrderManagementSSD) relatedService(OrderManagementService)
+	UC::categoryManagement() definedBySSD(CategoryManagementSSD) relatedService(CategoryManagementService)
+	UC::itemManagement() definedBySSD(ItemManagementSSD) relatedService(ItemManagementService)
+
+	Actor User("User") {
+		login
+		orderManagement
+	}
+
+	Actor Administrator("Administrator") {
+		userManagement
+		productManagement
+	}
+
+	Interaction OrderManagementSSD {
+
+		[Participants: User OrderManagementService]
+
+		CallMessage::OrderManagementSSDCallMessage1(addOrder OrderManagementSSDCallMessage1SendingEnd -> OrderManagementSSDExecution1StartEnd)
+		ReturnMessage::OrderManagementSSDCallMessage1Return(OrderManagementSSDExecution1FinishEnd -> OrderManagementSSDCallMessage1ReturnReceivingEnd OrderManagementSSDCallMessage1)
+		CallMessage::OrderManagementSSDCallMessage3(getAllItems OrderManagementSSDCallMessage3SendingEnd -> OrderManagementSSDExecution2StartEnd)
+		ReturnMessage::OrderManagementSSDCallMessage3Return(OrderManagementSSDExecution2FinishEnd -> OrderManagementSSDCallMessage3ReturnReceivingEnd OrderManagementSSDCallMessage3)
+		CallMessage::OrderManagementSSDCallMessage5(addLineItem OrderManagementSSDCallMessage5SendingEnd -> OrderManagementSSDExecution3StartEnd)
+		ReturnMessage::OrderManagementSSDCallMessage5Return(OrderManagementSSDExecution3FinishEnd -> OrderManagementSSDCallMessage5ReturnReceivingEnd OrderManagementSSDCallMessage5)
+		CallMessage::OrderManagementSSDCallMessage7(getAllOrders OrderManagementSSDCallMessage7SendingEnd -> OrderManagementSSDExecution4StartEnd)
+		ReturnMessage::OrderManagementSSDCallMessage7Return(OrderManagementSSDExecution4FinishEnd -> OrderManagementSSDCallMessage7ReturnReceivingEnd OrderManagementSSDCallMessage7)
+		CallMessage::OrderManagementSSDCallMessage9(deleteOrder OrderManagementSSDCallMessage9SendingEnd -> OrderManagementSSDExecution5StartEnd)
+		ReturnMessage::OrderManagementSSDCallMessage9Return(OrderManagementSSDExecution5FinishEnd -> OrderManagementSSDCallMessage9ReturnReceivingEnd OrderManagementSSDCallMessage9)
+
+		Execution::OrderManagementSSDExecution1(OrderManagementService OrderManagementSSDExecution1StartEnd OrderManagementSSDExecution1FinishEnd)
+		Execution::OrderManagementSSDExecution2(OrderManagementService OrderManagementSSDExecution2StartEnd OrderManagementSSDExecution2FinishEnd)
+		Execution::OrderManagementSSDExecution3(OrderManagementService OrderManagementSSDExecution3StartEnd OrderManagementSSDExecution3FinishEnd)
+		Execution::OrderManagementSSDExecution4(OrderManagementService OrderManagementSSDExecution4StartEnd OrderManagementSSDExecution4FinishEnd)
+		Execution::OrderManagementSSDExecution5(OrderManagementService OrderManagementSSDExecution5StartEnd OrderManagementSSDExecution5FinishEnd)
+
+		CombinedFragment::combinedFragement1 -> loop {
+
+			[Participants: OrderManagementService User]
+
+			combinedFragement1StartEnd -> combinedFragement1FinishEnd
+
+			Operand::hasMoreItems(condition1End combinedFragement1FinishEnd)
+		}
+
+		MessageEnd::OrderManagementSSDCallMessage1SendingEnd(User OrderManagementSSDCallMessage1)
+		ExecutionEnd::OrderManagementSSDExecution1StartEnd(OrderManagementService OrderManagementSSDExecution1)
+		ExecutionEnd::OrderManagementSSDExecution1FinishEnd(OrderManagementService OrderManagementSSDExecution1)
+		MessageEnd::OrderManagementSSDCallMessage1ReturnReceivingEnd(User OrderManagementSSDCallMessage1Return)
+		MessageEnd::OrderManagementSSDCallMessage3SendingEnd(User OrderManagementSSDCallMessage3)
+		ExecutionEnd::OrderManagementSSDExecution2StartEnd(OrderManagementService OrderManagementSSDExecution2)
+		ExecutionEnd::OrderManagementSSDExecution2FinishEnd(OrderManagementService OrderManagementSSDExecution2)
+		MessageEnd::OrderManagementSSDCallMessage3ReturnReceivingEnd(User OrderManagementSSDCallMessage3Return)
+		CombinedFragmentEnd::combinedFragement1StartEnd(combinedFragement1)
+		OperandEnd::condition1End(hasMoreItems)
+		MessageEnd::OrderManagementSSDCallMessage5SendingEnd(User OrderManagementSSDCallMessage5)
+		ExecutionEnd::OrderManagementSSDExecution3StartEnd(OrderManagementService OrderManagementSSDExecution3)
+		ExecutionEnd::OrderManagementSSDExecution3FinishEnd(OrderManagementService OrderManagementSSDExecution3)
+		MessageEnd::OrderManagementSSDCallMessage5ReturnReceivingEnd(User OrderManagementSSDCallMessage5Return)
+		CombinedFragmentEnd::combinedFragement1FinishEnd(combinedFragement1)
+		MessageEnd::OrderManagementSSDCallMessage7SendingEnd(User OrderManagementSSDCallMessage7)
+		ExecutionEnd::OrderManagementSSDExecution4StartEnd(OrderManagementService OrderManagementSSDExecution4)
+		ExecutionEnd::OrderManagementSSDExecution4FinishEnd(OrderManagementService OrderManagementSSDExecution4)
+		MessageEnd::OrderManagementSSDCallMessage7ReturnReceivingEnd(User OrderManagementSSDCallMessage7Return)
+		MessageEnd::OrderManagementSSDCallMessage9SendingEnd(User OrderManagementSSDCallMessage9)
+		ExecutionEnd::OrderManagementSSDExecution5StartEnd(OrderManagementService OrderManagementSSDExecution5)
+		ExecutionEnd::OrderManagementSSDExecution5FinishEnd(OrderManagementService OrderManagementSSDExecution5)
+		MessageEnd::OrderManagementSSDCallMessage9ReturnReceivingEnd(User OrderManagementSSDCallMessage9Return)
+
+	}
+
+	Interaction UserManagementSSD {
+
+		[Participants: Administrator UserManagementService]
+
+		CallMessage::UserManagementSSDCallMessage1(addUser UserManagementSSDCallMessage1SendingEnd -> UserManagementSSDExecution1StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage1Return(UserManagementSSDExecution1FinishEnd -> UserManagementSSDCallMessage1ReturnReceivingEnd UserManagementSSDCallMessage1)
+		CallMessage::UserManagementSSDCallMessage3(findUser UserManagementSSDCallMessage3SendingEnd -> UserManagementSSDExecution2StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage3Return(UserManagementSSDExecution2FinishEnd -> UserManagementSSDCallMessage3ReturnReceivingEnd UserManagementSSDCallMessage3)
+		CallMessage::UserManagementSSDCallMessage5(updateUser UserManagementSSDCallMessage5SendingEnd -> UserManagementSSDExecution3StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage5Return(UserManagementSSDExecution3FinishEnd -> UserManagementSSDCallMessage5ReturnReceivingEnd UserManagementSSDCallMessage5)
+		CallMessage::UserManagementSSDCallMessage7(findUser UserManagementSSDCallMessage7SendingEnd -> UserManagementSSDExecution4StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage7Return(UserManagementSSDExecution4FinishEnd -> UserManagementSSDCallMessage7ReturnReceivingEnd UserManagementSSDCallMessage7)
+		CallMessage::UserManagementSSDCallMessage9(deleteUser UserManagementSSDCallMessage9SendingEnd -> UserManagementSSDExecution5StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage9Return(UserManagementSSDExecution5FinishEnd -> UserManagementSSDCallMessage9ReturnReceivingEnd UserManagementSSDCallMessage9)
+
+		Execution::UserManagementSSDExecution1(UserManagementService UserManagementSSDExecution1StartEnd UserManagementSSDExecution1FinishEnd)
+		Execution::UserManagementSSDExecution2(UserManagementService UserManagementSSDExecution2StartEnd UserManagementSSDExecution2FinishEnd)
+		Execution::UserManagementSSDExecution3(UserManagementService UserManagementSSDExecution3StartEnd UserManagementSSDExecution3FinishEnd)
+		Execution::UserManagementSSDExecution4(UserManagementService UserManagementSSDExecution4StartEnd UserManagementSSDExecution4FinishEnd)
+		Execution::UserManagementSSDExecution5(UserManagementService UserManagementSSDExecution5StartEnd UserManagementSSDExecution5FinishEnd)
+
+		MessageEnd::UserManagementSSDCallMessage1SendingEnd(Administrator UserManagementSSDCallMessage1)
+		ExecutionEnd::UserManagementSSDExecution1StartEnd(UserManagementService UserManagementSSDExecution1)
+		ExecutionEnd::UserManagementSSDExecution1FinishEnd(UserManagementService UserManagementSSDExecution1)
+		MessageEnd::UserManagementSSDCallMessage1ReturnReceivingEnd(Administrator UserManagementSSDCallMessage1Return)
+		MessageEnd::UserManagementSSDCallMessage3SendingEnd(Administrator UserManagementSSDCallMessage3)
+		ExecutionEnd::UserManagementSSDExecution2StartEnd(UserManagementService UserManagementSSDExecution2)
+		ExecutionEnd::UserManagementSSDExecution2FinishEnd(UserManagementService UserManagementSSDExecution2)
+		MessageEnd::UserManagementSSDCallMessage3ReturnReceivingEnd(Administrator UserManagementSSDCallMessage3Return)
+		MessageEnd::UserManagementSSDCallMessage5SendingEnd(Administrator UserManagementSSDCallMessage5)
+		ExecutionEnd::UserManagementSSDExecution3StartEnd(UserManagementService UserManagementSSDExecution3)
+		ExecutionEnd::UserManagementSSDExecution3FinishEnd(UserManagementService UserManagementSSDExecution3)
+		MessageEnd::UserManagementSSDCallMessage5ReturnReceivingEnd(Administrator UserManagementSSDCallMessage5Return)
+		MessageEnd::UserManagementSSDCallMessage7SendingEnd(Administrator UserManagementSSDCallMessage7)
+		ExecutionEnd::UserManagementSSDExecution4StartEnd(UserManagementService UserManagementSSDExecution4)
+		ExecutionEnd::UserManagementSSDExecution4FinishEnd(UserManagementService UserManagementSSDExecution4)
+		MessageEnd::UserManagementSSDCallMessage7ReturnReceivingEnd(Administrator UserManagementSSDCallMessage7Return)
+		MessageEnd::UserManagementSSDCallMessage9SendingEnd(Administrator UserManagementSSDCallMessage9)
+		ExecutionEnd::UserManagementSSDExecution5StartEnd(UserManagementService UserManagementSSDExecution5)
+		ExecutionEnd::UserManagementSSDExecution5FinishEnd(UserManagementService UserManagementSSDExecution5)
+		MessageEnd::UserManagementSSDCallMessage9ReturnReceivingEnd(Administrator UserManagementSSDCallMessage9Return)
+
+	}
+
+	Interaction CategoryManagementSSD {
+
+		[Participants: Administrator CategoryManagementService]
+
+		CallMessage::CategoryManagementSSDCallMessage1(addCategory CategoryManagementSSDCallMessage1SendingEnd -> CategoryManagementSSDExecution1StartEnd)
+		ReturnMessage::CategoryManagementSSDCallMessage1Return(CategoryManagementSSDExecution1FinishEnd -> CategoryManagementSSDCallMessage1ReturnReceivingEnd CategoryManagementSSDCallMessage1)
+		CallMessage::CategoryManagementSSDCallMessage3(getAllCategories CategoryManagementSSDCallMessage3SendingEnd -> CategoryManagementSSDExecution2StartEnd)
+		ReturnMessage::CategoryManagementSSDCallMessage3Return(CategoryManagementSSDExecution2FinishEnd -> CategoryManagementSSDCallMessage3ReturnReceivingEnd CategoryManagementSSDCallMessage3)
+		CallMessage::CategoryManagementSSDCallMessage5(deleteCategory CategoryManagementSSDCallMessage5SendingEnd -> CategoryManagementSSDExecution3StartEnd)
+		ReturnMessage::CategoryManagementSSDCallMessage5Return(CategoryManagementSSDExecution3FinishEnd -> CategoryManagementSSDCallMessage5ReturnReceivingEnd CategoryManagementSSDCallMessage5)
+
+		Execution::CategoryManagementSSDExecution1(CategoryManagementService CategoryManagementSSDExecution1StartEnd CategoryManagementSSDExecution1FinishEnd)
+		Execution::CategoryManagementSSDExecution2(CategoryManagementService CategoryManagementSSDExecution2StartEnd CategoryManagementSSDExecution2FinishEnd)
+		Execution::CategoryManagementSSDExecution3(CategoryManagementService CategoryManagementSSDExecution3StartEnd CategoryManagementSSDExecution3FinishEnd)
+
+		MessageEnd::CategoryManagementSSDCallMessage1SendingEnd(Administrator CategoryManagementSSDCallMessage1)
+		ExecutionEnd::CategoryManagementSSDExecution1StartEnd(CategoryManagementService CategoryManagementSSDExecution1)
+		ExecutionEnd::CategoryManagementSSDExecution1FinishEnd(CategoryManagementService CategoryManagementSSDExecution1)
+		MessageEnd::CategoryManagementSSDCallMessage1ReturnReceivingEnd(Administrator CategoryManagementSSDCallMessage1Return)
+		MessageEnd::CategoryManagementSSDCallMessage3SendingEnd(Administrator CategoryManagementSSDCallMessage3)
+		ExecutionEnd::CategoryManagementSSDExecution2StartEnd(CategoryManagementService CategoryManagementSSDExecution2)
+		ExecutionEnd::CategoryManagementSSDExecution2FinishEnd(CategoryManagementService CategoryManagementSSDExecution2)
+		MessageEnd::CategoryManagementSSDCallMessage3ReturnReceivingEnd(Administrator CategoryManagementSSDCallMessage3Return)
+		MessageEnd::CategoryManagementSSDCallMessage5SendingEnd(Administrator CategoryManagementSSDCallMessage5)
+		ExecutionEnd::CategoryManagementSSDExecution3StartEnd(CategoryManagementService CategoryManagementSSDExecution3)
+		ExecutionEnd::CategoryManagementSSDExecution3FinishEnd(CategoryManagementService CategoryManagementSSDExecution3)
+		MessageEnd::CategoryManagementSSDCallMessage5ReturnReceivingEnd(Administrator CategoryManagementSSDCallMessage5Return)
+
+	}
+
+	Interaction ProductManagementSSD {
+
+		[Participants: Administrator ProductManagementService]
+
+		CallMessage::ProductManagementSSDCallMessage1(addProduct ProductManagementSSDCallMessage1SendingEnd -> ProductManagementSSDExecution1StartEnd)
+		ReturnMessage::ProductManagementSSDCallMessage1Return(ProductManagementSSDExecution1FinishEnd -> ProductManagementSSDCallMessage1ReturnReceivingEnd ProductManagementSSDCallMessage1)
+		CallMessage::ProductManagementSSDCallMessage3(getProduct ProductManagementSSDCallMessage3SendingEnd -> ProductManagementSSDExecution2StartEnd)
+		ReturnMessage::ProductManagementSSDCallMessage3Return(ProductManagementSSDExecution2FinishEnd -> ProductManagementSSDCallMessage3ReturnReceivingEnd ProductManagementSSDCallMessage3)
+		CallMessage::ProductManagementSSDCallMessage5(getProductListByCategory ProductManagementSSDCallMessage5SendingEnd -> ProductManagementSSDExecution3StartEnd)
+		ReturnMessage::ProductManagementSSDCallMessage5Return(ProductManagementSSDExecution3FinishEnd -> ProductManagementSSDCallMessage5ReturnReceivingEnd ProductManagementSSDCallMessage5)
+		CallMessage::ProductManagementSSDCallMessage7(deleteProduct ProductManagementSSDCallMessage7SendingEnd -> ProductManagementSSDExecution4StartEnd)
+		ReturnMessage::ProductManagementSSDCallMessage7Return(ProductManagementSSDExecution4FinishEnd -> ProductManagementSSDCallMessage7ReturnReceivingEnd ProductManagementSSDCallMessage7)
+
+		Execution::ProductManagementSSDExecution1(ProductManagementService ProductManagementSSDExecution1StartEnd ProductManagementSSDExecution1FinishEnd)
+		Execution::ProductManagementSSDExecution2(ProductManagementService ProductManagementSSDExecution2StartEnd ProductManagementSSDExecution2FinishEnd)
+		Execution::ProductManagementSSDExecution3(ProductManagementService ProductManagementSSDExecution3StartEnd ProductManagementSSDExecution3FinishEnd)
+		Execution::ProductManagementSSDExecution4(ProductManagementService ProductManagementSSDExecution4StartEnd ProductManagementSSDExecution4FinishEnd)
+
+		MessageEnd::ProductManagementSSDCallMessage1SendingEnd(Administrator ProductManagementSSDCallMessage1)
+		ExecutionEnd::ProductManagementSSDExecution1StartEnd(ProductManagementService ProductManagementSSDExecution1)
+		ExecutionEnd::ProductManagementSSDExecution1FinishEnd(ProductManagementService ProductManagementSSDExecution1)
+		MessageEnd::ProductManagementSSDCallMessage1ReturnReceivingEnd(Administrator ProductManagementSSDCallMessage1Return)
+		MessageEnd::ProductManagementSSDCallMessage3SendingEnd(Administrator ProductManagementSSDCallMessage3)
+		ExecutionEnd::ProductManagementSSDExecution2StartEnd(ProductManagementService ProductManagementSSDExecution2)
+		ExecutionEnd::ProductManagementSSDExecution2FinishEnd(ProductManagementService ProductManagementSSDExecution2)
+		MessageEnd::ProductManagementSSDCallMessage3ReturnReceivingEnd(Administrator ProductManagementSSDCallMessage3Return)
+		MessageEnd::ProductManagementSSDCallMessage5SendingEnd(Administrator ProductManagementSSDCallMessage5)
+		ExecutionEnd::ProductManagementSSDExecution3StartEnd(ProductManagementService ProductManagementSSDExecution3)
+		ExecutionEnd::ProductManagementSSDExecution3FinishEnd(ProductManagementService ProductManagementSSDExecution3)
+		MessageEnd::ProductManagementSSDCallMessage5ReturnReceivingEnd(Administrator ProductManagementSSDCallMessage5Return)
+		MessageEnd::ProductManagementSSDCallMessage7SendingEnd(Administrator ProductManagementSSDCallMessage7)
+		ExecutionEnd::ProductManagementSSDExecution4StartEnd(ProductManagementService ProductManagementSSDExecution4)
+		ExecutionEnd::ProductManagementSSDExecution4FinishEnd(ProductManagementService ProductManagementSSDExecution4)
+		MessageEnd::ProductManagementSSDCallMessage7ReturnReceivingEnd(Administrator ProductManagementSSDCallMessage7Return)
+
+	}
+
+	Interaction ItemManagementSSD {
+
+		[Participants: Administrator ItemManagementService]
+
+		CallMessage::ItemManagementSSDCallMessage1(addItem ItemManagementSSDCallMessage1SendingEnd -> ItemManagementSSDExecution1StartEnd)
+		ReturnMessage::ItemManagementSSDCallMessage1Return(ItemManagementSSDExecution1FinishEnd -> ItemManagementSSDCallMessage1ReturnReceivingEnd ItemManagementSSDCallMessage1)
+		CallMessage::ItemManagementSSDCallMessage3(deleteItem ItemManagementSSDCallMessage3SendingEnd -> ItemManagementSSDExecution2StartEnd)
+		ReturnMessage::ItemManagementSSDCallMessage3Return(ItemManagementSSDExecution2FinishEnd -> ItemManagementSSDCallMessage3ReturnReceivingEnd ItemManagementSSDCallMessage3)
+
+		Execution::ItemManagementSSDExecution1(ItemManagementService ItemManagementSSDExecution1StartEnd ItemManagementSSDExecution1FinishEnd)
+		Execution::ItemManagementSSDExecution2(ItemManagementService ItemManagementSSDExecution2StartEnd ItemManagementSSDExecution2FinishEnd)
+
+		MessageEnd::ItemManagementSSDCallMessage1SendingEnd(Administrator ItemManagementSSDCallMessage1)
+		ExecutionEnd::ItemManagementSSDExecution1StartEnd(ItemManagementService ItemManagementSSDExecution1)
+		ExecutionEnd::ItemManagementSSDExecution1FinishEnd(ItemManagementService ItemManagementSSDExecution1)
+		MessageEnd::ItemManagementSSDCallMessage1ReturnReceivingEnd(Administrator ItemManagementSSDCallMessage1Return)
+		MessageEnd::ItemManagementSSDCallMessage3SendingEnd(Administrator ItemManagementSSDCallMessage3)
+		ExecutionEnd::ItemManagementSSDExecution2StartEnd(ItemManagementService ItemManagementSSDExecution2)
+		ExecutionEnd::ItemManagementSSDExecution2FinishEnd(ItemManagementService ItemManagementSSDExecution2)
+		MessageEnd::ItemManagementSSDCallMessage3ReturnReceivingEnd(Administrator ItemManagementSSDCallMessage3Return)
+
+	}
+
+	Service OrderManagementService {
+
+		[Operation]
+		addOrder(orderId, orderDate)
+		addLineItem(orderId, lineItemId, itemId, quantity, total)
+		deleteOrder(orderId)
+		getAllItems()
+		getAllOrders()
+
+	}
+
+	Service UserManagementService {
+
+		[Operation]
+		addUser(userId, userName, password)
+		findUser(userId)
+		updateUser(userId, userName, password)
+		deleteUser(userId)
+
+	}
+
+	Service ProductManagementService {
+
+		[Operation]
+		addProduct(productId, categoryId, productName)
+		getProduct(productId)
+		getProductListByCategory(categoryId)
+		deleteProduct(productId)
+
+	}
+
+	Service CategoryManagementService {
+
+		[Operation]
+		addCategory(categoryId, categoryName)
+		deleteCategory(categoryId)
+		getAllCategories()
+
+	}
+
+	Service ItemManagementService {
+
+		[Operation]
+		addItem(itemId, productId, quantity)
+		deleteItem(itemId)
+
+	}
+
+	Service JPetStoreSystem {
+
+		[Operation]
+		login(userId, password)
+
+		[TempProperty]
+		LoginUser:User
+
+	}
+
+	Service ThirdPartyServices {
+
+	}
+
+	Contract UserManagementService::deleteUser(userId : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			User.allInstance()->excludes(user) and
+			result = true
+	}
+
+	Contract UserManagementService::updateUser(userId : String, userName : String, password : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			user.UserName = userName and
+			user.Password = password and
+			result = true
+	}
+
+	Contract UserManagementService::findUser(userId : String) : User {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			result = user
+	}
+
+	Contract UserManagementService::addUser(userId : String, userName : String, password : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = true
+		postcondition:
+			let u:User in
+			u.oclIsNew() and
+			u.UserId = userId and
+			u.UserName = userName and
+			u.Password = password and
+			User.allInstance()->includes(u) and
+			result = true
+	}
+
+	Contract JPetStoreSystem::login(userId : String, password : String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId and u.Password = password)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			self.LoginUser = user and
+			result = true
+	}
+
+	Contract OrderManagementService::addOrder(orderId : String, orderDate : Date) : Boolean {
+
+		definition:
+			order:Order = Order.allInstance()->any(o:Order | o.OrderId = orderId)
+
+		precondition:
+			LoginUser.oclIsUndefined() = false and
+			order.oclIsUndefined() = true
+		postcondition:
+			let o:Order in
+			o.oclIsNew() and
+			o.OrderId = orderId and
+			o.OrderDate = orderDate and
+			Order.allInstance()->includes(o) and
+			LoginUser.Orders->includes(o) and
+			result = true
+	}
+
+	Contract OrderManagementService::getAllOrders() : Sequence(Order) {
+
+		precondition:
+			LoginUser.oclIsUndefined() = false
+		postcondition:
+			result = LoginUser.Orders
+	}
+
+	Contract OrderManagementService::getAllItems() : Sequence(Item) {
+
+		precondition:
+			true
+		postcondition:
+			result = Item.allInstance()
+	}
+
+	Contract OrderManagementService::deleteOrder(orderId : String) : Boolean {
+
+		definition:
+			order:Order = LoginUser.Orders->any(o:Order| o.OrderId = orderId)
+
+		precondition:
+			LoginUser.oclIsUndefined() = false and
+			order.oclIsUndefined() = false
+		postcondition:
+			Order.allInstance()->excludes(order) and
+			LoginUser.Orders->excludes(order) and
+			result = true
+	}
+
+	Contract OrderManagementService::addLineItem(orderId: String, lineItemId : String, itemId: String, quantity :Integer, total : Real) : Boolean {
+
+		definition:
+			order:Order = LoginUser.Orders->any(o:Order| o.OrderId = orderId),
+			lineItem:LineItem = LineItem.allInstance()->any(l:LineItem | l.LineItemId = lineItemId),
+			item:Item = Item.allInstance()->any(i:Item | i.ItemId = itemId)
+
+		precondition:
+			LoginUser.oclIsUndefined() = false and
+			order.oclIsUndefined() = false and
+			lineItem.oclIsUndefined() = true
+		postcondition:
+			let l:LineItem in
+			l.oclIsNew() and
+			l.LineItemId = lineItemId and
+			l.Quantity = quantity and
+			l.Total = total and
+			LineItem.allInstance()->includes(l) and
+			l.Item = item and
+			order.LineItems->includes(l) and
+			result = true
+	}
+
+	Contract CategoryManagementService::getAllCategories() : Sequence(Category) {
+
+		precondition:
+			true
+		postcondition:
+			result = Category.allInstance()
+	}
+
+	Contract CategoryManagementService::addCategory(categoryId : String, categoryName : String) : Boolean {
+
+		definition:
+			category:Category = Category.allInstance()->any(c:Category | c.CategoryId = categoryId)
+
+		precondition:
+			category.oclIsUndefined() = true
+		postcondition:
+			let c:Category in
+			c.oclIsNew() and
+			c.CategoryId = categoryId and
+			c.CategoryName = categoryName and
+			Category.allInstance()->includes(c) and
+			result = true
+	}
+
+	Contract ItemManagementService::addItem(itemId : String, productId : String, quantity : Integer) : Boolean {
+
+		definition:
+			item:Item = Item.allInstance()->any(i:Item | i.ItemId = itemId),
+			product:Product = Product.allInstance()->any(p:Product | p.ProductId = productId)
+
+		precondition:
+			item.oclIsUndefined() = true and
+			product.oclIsUndefined() = false
+		postcondition:
+			let i:Item in
+			i.oclIsNew() and
+			i.ItemId = itemId and
+			i.Quantity = quantity and
+			i.Product = product and
+			Item.allInstance()->includes(i) and
+			result = true
+	}
+
+	Contract ProductManagementService::getProductListByCategory(categoryId : String) : Sequence(Product) {
+
+		precondition:
+			true
+		postcondition:
+			result = Product.allInstance()->select(p:Product | p.Category.CategoryId = categoryId)
+	}
+
+	Contract ProductManagementService::getProduct(productId : String) : Product {
+
+		definition:
+			product:Product = Product.allInstance()->any(p:Product | p.ProductId = productId)
+
+		precondition:
+			product.oclIsUndefined() = false
+		postcondition:
+			result = product
+	}
+
+	Contract ProductManagementService::addProduct(productId : String, categoryId : String, productName : String) : Boolean {
+
+		definition:
+			product:Product = Product.allInstance()->any(p:Product | p.ProductId = productId),
+			category:Category = Category.allInstance()->any(c:Category | c.CategoryId = categoryId)
+
+		precondition:
+			product.oclIsUndefined() = true and
+			category.oclIsUndefined() = false
+		postcondition:
+			let p:Product in
+			p.oclIsNew() and
+			p.ProductId = productId and
+			p.ProductName = productName and
+			p.Category = category and
+			Product.allInstance()->includes(p) and
+			result = true
+	}
+
+	Contract ItemManagementService::deleteItem(itemId : String) : Boolean {
+
+		definition:
+			lineItems:Sequence(LineItem) = LineItem.allInstance()->select(l:LineItem | l.Item.ItemId = itemId),
+			item:Item = Item.allInstance()->any(i:Item | i.ItemId = itemId)
+
+		precondition:
+			lineItems.isEmpty() and
+			item.oclIsUndefined() = false
+		postcondition:
+			Item.allInstance()->excludes(item) and
+			result = true
+	}
+
+	Contract CategoryManagementService::deleteCategory(categoryId : String) : Boolean {
+
+		definition:
+			products:Sequence(Product) = Product.allInstance()->select(p:Product | p.Category.CategoryId = categoryId),
+			category:Category = Category.allInstance()->any(c:Category | c.CategoryId = categoryId)
+
+		precondition:
+			products.isEmpty() and
+			category.oclIsUndefined() = false
+		postcondition:
+			Category.allInstance()->excludes(category) and
+			result = true
+	}
+
+	Contract ProductManagementService::deleteProduct(productId : String) : Boolean {
+
+		definition:
+			items:Sequence(Item) = Item.allInstance()->select(i:Item | i.Product.ProductId = productId),
+			product:Product = Product.allInstance()->any(p:Product | p.ProductId = productId)
+
+		precondition:
+			items.isEmpty() and
+			product.oclIsUndefined() = false
+		postcondition:
+			Product.allInstance()->excludes(product) and
+			result = true
+	}
+
+}
+
+DomainModel JPetStore {
+
+	Entity Category {
+		CategoryId : String
+		CategoryName : String
+	}
+
+	Entity User {
+		UserId: String
+		UserName : String
+		Password : String
+
+		[Refer]
+		Orders: Order* Association
+	}
+
+	Entity Product {
+		ProductId : String
+		ProductName : String
+
+		[Refer]
+		Category : Category Association
+	}
+
+	Entity Order {
+		OrderId : String
+		OrderDate : Date
+
+		[Refer]
+		LineItems : LineItem* Association
+	}
+
+	Entity LineItem {
+		LineItemId : String
+		Quantity : Integer
+		Total : Real
+
+		[Refer]
+		Item : Item Association
+		[INV]
+		inv QuantityRange: self.Quantity>=0
+	}
+
+	Entity Item {
+		ItemId : String
+		Quantity : Integer
+
+		[Refer]
+		Product : Product Association
+		[INV]
+		inv QuantityRange: self.Quantity>=0
+	}
+
+}
+

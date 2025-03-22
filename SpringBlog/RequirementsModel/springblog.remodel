@@ -1,0 +1,682 @@
+UseCaseModel SpringBlog {
+
+	UC::login()
+	UC::browse() definedBySSD(BrowseSSD) relatedService(BrowseService)
+	UC::blogManagement() definedBySSD(BlogManagementSSD) relatedService(BlogManagementService)
+	UC::fileManagement() definedBySSD(FileManagementSSD) relatedService(FileManagementService)
+	UC::likeManagement() definedBySSD(LikeManagementSSD) relatedService(LikeManagementService)
+	UC::tagManagement() definedBySSD(TagManagementSSD) relatedService(TagManagementService)
+	UC::userManagement() definedBySSD(UserManagementSSD) relatedService(UserManagementService)
+
+	Actor Visitor("Visitor") {
+		browse
+		likeManagement
+	}
+
+	Actor User("User") extends Visitor {
+		login
+		blogManagement
+		fileManagement
+	}
+
+	Actor Administrator("Administrator") extends User {
+		userManagement
+		tagManagement
+	}
+
+	Interaction LikeManagementSSD {
+
+		[Participants: User LikeManagementService]
+
+		CallMessage::LikeManagementSSDCallMessage1(likeBlog LikeManagementSSDCallMessage1SendingEnd -> LikeManagementSSDExecution1StartEnd)
+		ReturnMessage::LikeManagementSSDCallMessage1Return(LikeManagementSSDExecution1FinishEnd -> LikeManagementSSDCallMessage1ReturnReceivingEnd LikeManagementSSDCallMessage1)
+		CallMessage::LikeManagementSSDCallMessage3(getLikeBlogs LikeManagementSSDCallMessage3SendingEnd -> LikeManagementSSDExecution2StartEnd)
+		ReturnMessage::LikeManagementSSDCallMessage3Return(LikeManagementSSDExecution2FinishEnd -> LikeManagementSSDCallMessage3ReturnReceivingEnd LikeManagementSSDCallMessage3)
+		CallMessage::LikeManagementSSDCallMessage5(dislikeBlog LikeManagementSSDCallMessage5SendingEnd -> LikeManagementSSDExecution3StartEnd)
+		ReturnMessage::LikeManagementSSDCallMessage5Return(LikeManagementSSDExecution3FinishEnd -> LikeManagementSSDCallMessage5ReturnReceivingEnd LikeManagementSSDCallMessage5)
+		CallMessage::LikeManagementSSDCallMessage7(getLikeBlogs LikeManagementSSDCallMessage7SendingEnd -> LikeManagementSSDExecution4StartEnd)
+		ReturnMessage::LikeManagementSSDCallMessage7Return(LikeManagementSSDExecution4FinishEnd -> LikeManagementSSDCallMessage7ReturnReceivingEnd LikeManagementSSDCallMessage7)
+
+		Execution::LikeManagementSSDExecution1(LikeManagementService LikeManagementSSDExecution1StartEnd LikeManagementSSDExecution1FinishEnd)
+		Execution::LikeManagementSSDExecution2(LikeManagementService LikeManagementSSDExecution2StartEnd LikeManagementSSDExecution2FinishEnd)
+		Execution::LikeManagementSSDExecution3(LikeManagementService LikeManagementSSDExecution3StartEnd LikeManagementSSDExecution3FinishEnd)
+		Execution::LikeManagementSSDExecution4(LikeManagementService LikeManagementSSDExecution4StartEnd LikeManagementSSDExecution4FinishEnd)
+
+		MessageEnd::LikeManagementSSDCallMessage1SendingEnd(User LikeManagementSSDCallMessage1)
+		ExecutionEnd::LikeManagementSSDExecution1StartEnd(LikeManagementService LikeManagementSSDExecution1)
+		ExecutionEnd::LikeManagementSSDExecution1FinishEnd(LikeManagementService LikeManagementSSDExecution1)
+		MessageEnd::LikeManagementSSDCallMessage1ReturnReceivingEnd(User LikeManagementSSDCallMessage1Return)
+		MessageEnd::LikeManagementSSDCallMessage3SendingEnd(User LikeManagementSSDCallMessage3)
+		ExecutionEnd::LikeManagementSSDExecution2StartEnd(LikeManagementService LikeManagementSSDExecution2)
+		ExecutionEnd::LikeManagementSSDExecution2FinishEnd(LikeManagementService LikeManagementSSDExecution2)
+		MessageEnd::LikeManagementSSDCallMessage3ReturnReceivingEnd(User LikeManagementSSDCallMessage3Return)
+		MessageEnd::LikeManagementSSDCallMessage5SendingEnd(User LikeManagementSSDCallMessage5)
+		ExecutionEnd::LikeManagementSSDExecution3StartEnd(LikeManagementService LikeManagementSSDExecution3)
+		ExecutionEnd::LikeManagementSSDExecution3FinishEnd(LikeManagementService LikeManagementSSDExecution3)
+		MessageEnd::LikeManagementSSDCallMessage5ReturnReceivingEnd(User LikeManagementSSDCallMessage5Return)
+		MessageEnd::LikeManagementSSDCallMessage7SendingEnd(User LikeManagementSSDCallMessage7)
+		ExecutionEnd::LikeManagementSSDExecution4StartEnd(LikeManagementService LikeManagementSSDExecution4)
+		ExecutionEnd::LikeManagementSSDExecution4FinishEnd(LikeManagementService LikeManagementSSDExecution4)
+		MessageEnd::LikeManagementSSDCallMessage7ReturnReceivingEnd(User LikeManagementSSDCallMessage7Return)
+
+	}
+
+	Interaction UserManagementSSD {
+
+		[Participants: Administrator UserManagementService]
+
+		CallMessage::UserManagementSSDCallMessage1(addUser UserManagementSSDCallMessage1SendingEnd -> UserManagementSSDExecution1StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage1Return(UserManagementSSDExecution1FinishEnd -> UserManagementSSDCallMessage1ReturnReceivingEnd UserManagementSSDCallMessage1)
+		CallMessage::UserManagementSSDCallMessage3(findUser UserManagementSSDCallMessage3SendingEnd -> UserManagementSSDExecution2StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage3Return(UserManagementSSDExecution2FinishEnd -> UserManagementSSDCallMessage3ReturnReceivingEnd UserManagementSSDCallMessage3)
+		CallMessage::UserManagementSSDCallMessage5(updateUser UserManagementSSDCallMessage5SendingEnd -> UserManagementSSDExecution3StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage5Return(UserManagementSSDExecution3FinishEnd -> UserManagementSSDCallMessage5ReturnReceivingEnd UserManagementSSDCallMessage5)
+		CallMessage::UserManagementSSDCallMessage7(findUser UserManagementSSDCallMessage7SendingEnd -> UserManagementSSDExecution4StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage7Return(UserManagementSSDExecution4FinishEnd -> UserManagementSSDCallMessage7ReturnReceivingEnd UserManagementSSDCallMessage7)
+		CallMessage::UserManagementSSDCallMessage9(deleteUser UserManagementSSDCallMessage9SendingEnd -> UserManagementSSDExecution5StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage9Return(UserManagementSSDExecution5FinishEnd -> UserManagementSSDCallMessage9ReturnReceivingEnd UserManagementSSDCallMessage9)
+
+		Execution::UserManagementSSDExecution1(UserManagementService UserManagementSSDExecution1StartEnd UserManagementSSDExecution1FinishEnd)
+		Execution::UserManagementSSDExecution2(UserManagementService UserManagementSSDExecution2StartEnd UserManagementSSDExecution2FinishEnd)
+		Execution::UserManagementSSDExecution3(UserManagementService UserManagementSSDExecution3StartEnd UserManagementSSDExecution3FinishEnd)
+		Execution::UserManagementSSDExecution4(UserManagementService UserManagementSSDExecution4StartEnd UserManagementSSDExecution4FinishEnd)
+		Execution::UserManagementSSDExecution5(UserManagementService UserManagementSSDExecution5StartEnd UserManagementSSDExecution5FinishEnd)
+
+		MessageEnd::UserManagementSSDCallMessage1SendingEnd(Administrator UserManagementSSDCallMessage1)
+		ExecutionEnd::UserManagementSSDExecution1StartEnd(UserManagementService UserManagementSSDExecution1)
+		ExecutionEnd::UserManagementSSDExecution1FinishEnd(UserManagementService UserManagementSSDExecution1)
+		MessageEnd::UserManagementSSDCallMessage1ReturnReceivingEnd(Administrator UserManagementSSDCallMessage1Return)
+		MessageEnd::UserManagementSSDCallMessage3SendingEnd(Administrator UserManagementSSDCallMessage3)
+		ExecutionEnd::UserManagementSSDExecution2StartEnd(UserManagementService UserManagementSSDExecution2)
+		ExecutionEnd::UserManagementSSDExecution2FinishEnd(UserManagementService UserManagementSSDExecution2)
+		MessageEnd::UserManagementSSDCallMessage3ReturnReceivingEnd(Administrator UserManagementSSDCallMessage3Return)
+		MessageEnd::UserManagementSSDCallMessage5SendingEnd(Administrator UserManagementSSDCallMessage5)
+		ExecutionEnd::UserManagementSSDExecution3StartEnd(UserManagementService UserManagementSSDExecution3)
+		ExecutionEnd::UserManagementSSDExecution3FinishEnd(UserManagementService UserManagementSSDExecution3)
+		MessageEnd::UserManagementSSDCallMessage5ReturnReceivingEnd(Administrator UserManagementSSDCallMessage5Return)
+		MessageEnd::UserManagementSSDCallMessage7SendingEnd(Administrator UserManagementSSDCallMessage7)
+		ExecutionEnd::UserManagementSSDExecution4StartEnd(UserManagementService UserManagementSSDExecution4)
+		ExecutionEnd::UserManagementSSDExecution4FinishEnd(UserManagementService UserManagementSSDExecution4)
+		MessageEnd::UserManagementSSDCallMessage7ReturnReceivingEnd(Administrator UserManagementSSDCallMessage7Return)
+		MessageEnd::UserManagementSSDCallMessage9SendingEnd(Administrator UserManagementSSDCallMessage9)
+		ExecutionEnd::UserManagementSSDExecution5StartEnd(UserManagementService UserManagementSSDExecution5)
+		ExecutionEnd::UserManagementSSDExecution5FinishEnd(UserManagementService UserManagementSSDExecution5)
+		MessageEnd::UserManagementSSDCallMessage9ReturnReceivingEnd(Administrator UserManagementSSDCallMessage9Return)
+
+	}
+
+	Interaction TagManagementSSD {
+
+		[Participants: Administrator TagManagementService]
+
+		CallMessage::TagManagementSSDCallMessage1(addTag TagManagementSSDCallMessage1SendingEnd -> TagManagementSSDExecution1StartEnd)
+		ReturnMessage::TagManagementSSDCallMessage1Return(TagManagementSSDExecution1FinishEnd -> TagManagementSSDCallMessage1ReturnReceivingEnd TagManagementSSDCallMessage1)
+		CallMessage::TagManagementSSDCallMessage3(getAllTags TagManagementSSDCallMessage3SendingEnd -> TagManagementSSDExecution2StartEnd)
+		ReturnMessage::TagManagementSSDCallMessage3Return(TagManagementSSDExecution2FinishEnd -> TagManagementSSDCallMessage3ReturnReceivingEnd TagManagementSSDCallMessage3)
+		CallMessage::TagManagementSSDCallMessage5(findTag TagManagementSSDCallMessage5SendingEnd -> TagManagementSSDExecution3StartEnd)
+		ReturnMessage::TagManagementSSDCallMessage5Return(TagManagementSSDExecution3FinishEnd -> TagManagementSSDCallMessage5ReturnReceivingEnd TagManagementSSDCallMessage5)
+		CallMessage::TagManagementSSDCallMessage7(findTagByName TagManagementSSDCallMessage7SendingEnd -> TagManagementSSDExecution4StartEnd)
+		ReturnMessage::TagManagementSSDCallMessage7Return(TagManagementSSDExecution4FinishEnd -> TagManagementSSDCallMessage7ReturnReceivingEnd TagManagementSSDCallMessage7)
+		CallMessage::TagManagementSSDCallMessage9(deleteTag TagManagementSSDCallMessage9SendingEnd -> TagManagementSSDExecution5StartEnd)
+		ReturnMessage::TagManagementSSDCallMessage9Return(TagManagementSSDExecution5FinishEnd -> TagManagementSSDCallMessage9ReturnReceivingEnd TagManagementSSDCallMessage9)
+
+		Execution::TagManagementSSDExecution1(TagManagementService TagManagementSSDExecution1StartEnd TagManagementSSDExecution1FinishEnd)
+		Execution::TagManagementSSDExecution2(TagManagementService TagManagementSSDExecution2StartEnd TagManagementSSDExecution2FinishEnd)
+		Execution::TagManagementSSDExecution3(TagManagementService TagManagementSSDExecution3StartEnd TagManagementSSDExecution3FinishEnd)
+		Execution::TagManagementSSDExecution4(TagManagementService TagManagementSSDExecution4StartEnd TagManagementSSDExecution4FinishEnd)
+		Execution::TagManagementSSDExecution5(TagManagementService TagManagementSSDExecution5StartEnd TagManagementSSDExecution5FinishEnd)
+
+		MessageEnd::TagManagementSSDCallMessage1SendingEnd(Administrator TagManagementSSDCallMessage1)
+		ExecutionEnd::TagManagementSSDExecution1StartEnd(TagManagementService TagManagementSSDExecution1)
+		ExecutionEnd::TagManagementSSDExecution1FinishEnd(TagManagementService TagManagementSSDExecution1)
+		MessageEnd::TagManagementSSDCallMessage1ReturnReceivingEnd(Administrator TagManagementSSDCallMessage1Return)
+		MessageEnd::TagManagementSSDCallMessage3SendingEnd(Administrator TagManagementSSDCallMessage3)
+		ExecutionEnd::TagManagementSSDExecution2StartEnd(TagManagementService TagManagementSSDExecution2)
+		ExecutionEnd::TagManagementSSDExecution2FinishEnd(TagManagementService TagManagementSSDExecution2)
+		MessageEnd::TagManagementSSDCallMessage3ReturnReceivingEnd(Administrator TagManagementSSDCallMessage3Return)
+		MessageEnd::TagManagementSSDCallMessage5SendingEnd(Administrator TagManagementSSDCallMessage5)
+		ExecutionEnd::TagManagementSSDExecution3StartEnd(TagManagementService TagManagementSSDExecution3)
+		ExecutionEnd::TagManagementSSDExecution3FinishEnd(TagManagementService TagManagementSSDExecution3)
+		MessageEnd::TagManagementSSDCallMessage5ReturnReceivingEnd(Administrator TagManagementSSDCallMessage5Return)
+		MessageEnd::TagManagementSSDCallMessage7SendingEnd(Administrator TagManagementSSDCallMessage7)
+		ExecutionEnd::TagManagementSSDExecution4StartEnd(TagManagementService TagManagementSSDExecution4)
+		ExecutionEnd::TagManagementSSDExecution4FinishEnd(TagManagementService TagManagementSSDExecution4)
+		MessageEnd::TagManagementSSDCallMessage7ReturnReceivingEnd(Administrator TagManagementSSDCallMessage7Return)
+		MessageEnd::TagManagementSSDCallMessage9SendingEnd(Administrator TagManagementSSDCallMessage9)
+		ExecutionEnd::TagManagementSSDExecution5StartEnd(TagManagementService TagManagementSSDExecution5)
+		ExecutionEnd::TagManagementSSDExecution5FinishEnd(TagManagementService TagManagementSSDExecution5)
+		MessageEnd::TagManagementSSDCallMessage9ReturnReceivingEnd(Administrator TagManagementSSDCallMessage9Return)
+
+	}
+
+	Interaction BlogManagementSSD {
+
+		[Participants: User BlogManagementService]
+
+		CallMessage::BlogManagementSSDCallMessage1(addBlog BlogManagementSSDCallMessage1SendingEnd -> BlogManagementSSDExecution1StartEnd)
+		ReturnMessage::BlogManagementSSDCallMessage1Return(BlogManagementSSDExecution1FinishEnd -> BlogManagementSSDCallMessage1ReturnReceivingEnd BlogManagementSSDCallMessage1)
+		CallMessage::BlogManagementSSDCallMessage3(linkFile BlogManagementSSDCallMessage3SendingEnd -> BlogManagementSSDExecution2StartEnd)
+		ReturnMessage::BlogManagementSSDCallMessage3Return(BlogManagementSSDExecution2FinishEnd -> BlogManagementSSDCallMessage3ReturnReceivingEnd BlogManagementSSDCallMessage3)
+		CallMessage::BlogManagementSSDCallMessage5(updateBlog BlogManagementSSDCallMessage5SendingEnd -> BlogManagementSSDExecution3StartEnd)
+		ReturnMessage::BlogManagementSSDCallMessage5Return(BlogManagementSSDExecution3FinishEnd -> BlogManagementSSDCallMessage5ReturnReceivingEnd BlogManagementSSDCallMessage5)
+		CallMessage::BlogManagementSSDCallMessage7(deleteBlog BlogManagementSSDCallMessage7SendingEnd -> BlogManagementSSDExecution4StartEnd)
+		ReturnMessage::BlogManagementSSDCallMessage7Return(BlogManagementSSDExecution4FinishEnd -> BlogManagementSSDCallMessage7ReturnReceivingEnd BlogManagementSSDCallMessage7)
+
+		Execution::BlogManagementSSDExecution1(BlogManagementService BlogManagementSSDExecution1StartEnd BlogManagementSSDExecution1FinishEnd)
+		Execution::BlogManagementSSDExecution2(BlogManagementService BlogManagementSSDExecution2StartEnd BlogManagementSSDExecution2FinishEnd)
+		Execution::BlogManagementSSDExecution3(BlogManagementService BlogManagementSSDExecution3StartEnd BlogManagementSSDExecution3FinishEnd)
+		Execution::BlogManagementSSDExecution4(BlogManagementService BlogManagementSSDExecution4StartEnd BlogManagementSSDExecution4FinishEnd)
+
+		CombinedFragment:: combinedFragement1 -> loop {
+
+			[Participants: BlogManagementService User]
+
+			combinedFragement1StartEnd -> combinedFragement1FinishEnd
+
+			Operand::hasMoreFiles(condition1End combinedFragement1FinishEnd)
+		}
+
+		MessageEnd::BlogManagementSSDCallMessage1SendingEnd(User BlogManagementSSDCallMessage1)
+		ExecutionEnd::BlogManagementSSDExecution1StartEnd(BlogManagementService BlogManagementSSDExecution1)
+		ExecutionEnd::BlogManagementSSDExecution1FinishEnd(BlogManagementService BlogManagementSSDExecution1)
+		MessageEnd::BlogManagementSSDCallMessage1ReturnReceivingEnd(User BlogManagementSSDCallMessage1Return)
+		CombinedFragmentEnd::combinedFragement1StartEnd(combinedFragement1)
+		OperandEnd::condition1End(hasMoreFiles)
+		MessageEnd::BlogManagementSSDCallMessage3SendingEnd(User BlogManagementSSDCallMessage3)
+		ExecutionEnd::BlogManagementSSDExecution2StartEnd(BlogManagementService BlogManagementSSDExecution2)
+		ExecutionEnd::BlogManagementSSDExecution2FinishEnd(BlogManagementService BlogManagementSSDExecution2)
+		MessageEnd::BlogManagementSSDCallMessage3ReturnReceivingEnd(User BlogManagementSSDCallMessage3Return)
+		CombinedFragmentEnd::combinedFragement1FinishEnd(combinedFragement1)
+		MessageEnd::BlogManagementSSDCallMessage5SendingEnd(User BlogManagementSSDCallMessage5)
+		ExecutionEnd::BlogManagementSSDExecution3StartEnd(BlogManagementService BlogManagementSSDExecution3)
+		ExecutionEnd::BlogManagementSSDExecution3FinishEnd(BlogManagementService BlogManagementSSDExecution3)
+		MessageEnd::BlogManagementSSDCallMessage5ReturnReceivingEnd(User BlogManagementSSDCallMessage5Return)
+		MessageEnd::BlogManagementSSDCallMessage7SendingEnd(User BlogManagementSSDCallMessage7)
+		ExecutionEnd::BlogManagementSSDExecution4StartEnd(BlogManagementService BlogManagementSSDExecution4)
+		ExecutionEnd::BlogManagementSSDExecution4FinishEnd(BlogManagementService BlogManagementSSDExecution4)
+		MessageEnd::BlogManagementSSDCallMessage7ReturnReceivingEnd(User BlogManagementSSDCallMessage7Return)
+
+	}
+
+	Interaction FileManagementSSD {
+
+		[Participants: User FileManagementService]
+
+		CallMessage::FileManagementSSDCallMessage1(addFile FileManagementSSDCallMessage1SendingEnd -> FileManagementSSDExecution1StartEnd)
+		ReturnMessage::FileManagementSSDCallMessage1Return(FileManagementSSDExecution1FinishEnd -> FileManagementSSDCallMessage1ReturnReceivingEnd FileManagementSSDCallMessage1)
+		CallMessage::FileManagementSSDCallMessage3(getFileById FileManagementSSDCallMessage3SendingEnd -> FileManagementSSDExecution2StartEnd)
+		ReturnMessage::FileManagementSSDCallMessage3Return(FileManagementSSDExecution2FinishEnd -> FileManagementSSDCallMessage3ReturnReceivingEnd FileManagementSSDCallMessage3)
+		CallMessage::FileManagementSSDCallMessage5(getFileByName FileManagementSSDCallMessage5SendingEnd -> FileManagementSSDExecution3StartEnd)
+		ReturnMessage::FileManagementSSDCallMessage5Return(FileManagementSSDExecution3FinishEnd -> FileManagementSSDCallMessage5ReturnReceivingEnd FileManagementSSDCallMessage5)
+		CallMessage::FileManagementSSDCallMessage7(deleteFile FileManagementSSDCallMessage7SendingEnd -> FileManagementSSDExecution4StartEnd)
+		ReturnMessage::FileManagementSSDCallMessage7Return(FileManagementSSDExecution4FinishEnd -> FileManagementSSDCallMessage7ReturnReceivingEnd FileManagementSSDCallMessage7)
+
+		Execution::FileManagementSSDExecution1(FileManagementService FileManagementSSDExecution1StartEnd FileManagementSSDExecution1FinishEnd)
+		Execution::FileManagementSSDExecution2(FileManagementService FileManagementSSDExecution2StartEnd FileManagementSSDExecution2FinishEnd)
+		Execution::FileManagementSSDExecution3(FileManagementService FileManagementSSDExecution3StartEnd FileManagementSSDExecution3FinishEnd)
+		Execution::FileManagementSSDExecution4(FileManagementService FileManagementSSDExecution4StartEnd FileManagementSSDExecution4FinishEnd)
+
+		MessageEnd::FileManagementSSDCallMessage1SendingEnd(User FileManagementSSDCallMessage1)
+		ExecutionEnd::FileManagementSSDExecution1StartEnd(FileManagementService FileManagementSSDExecution1)
+		ExecutionEnd::FileManagementSSDExecution1FinishEnd(FileManagementService FileManagementSSDExecution1)
+		MessageEnd::FileManagementSSDCallMessage1ReturnReceivingEnd(User FileManagementSSDCallMessage1Return)
+		MessageEnd::FileManagementSSDCallMessage3SendingEnd(User FileManagementSSDCallMessage3)
+		ExecutionEnd::FileManagementSSDExecution2StartEnd(FileManagementService FileManagementSSDExecution2)
+		ExecutionEnd::FileManagementSSDExecution2FinishEnd(FileManagementService FileManagementSSDExecution2)
+		MessageEnd::FileManagementSSDCallMessage3ReturnReceivingEnd(User FileManagementSSDCallMessage3Return)
+		MessageEnd::FileManagementSSDCallMessage5SendingEnd(User FileManagementSSDCallMessage5)
+		ExecutionEnd::FileManagementSSDExecution3StartEnd(FileManagementService FileManagementSSDExecution3)
+		ExecutionEnd::FileManagementSSDExecution3FinishEnd(FileManagementService FileManagementSSDExecution3)
+		MessageEnd::FileManagementSSDCallMessage5ReturnReceivingEnd(User FileManagementSSDCallMessage5Return)
+		MessageEnd::FileManagementSSDCallMessage7SendingEnd(User FileManagementSSDCallMessage7)
+		ExecutionEnd::FileManagementSSDExecution4StartEnd(FileManagementService FileManagementSSDExecution4)
+		ExecutionEnd::FileManagementSSDExecution4FinishEnd(FileManagementService FileManagementSSDExecution4)
+		MessageEnd::FileManagementSSDCallMessage7ReturnReceivingEnd(User FileManagementSSDCallMessage7Return)
+
+	}
+
+	Interaction BrowseSSD {
+
+		[Participants: Visitor BrowseService]
+
+		CallMessage::BrowseSSDCallMessage1(getAllBlog BrowseSSDCallMessage1SendingEnd -> BrowseSSDExecution1StartEnd)
+		ReturnMessage::BrowseSSDCallMessage1Return(BrowseSSDExecution1FinishEnd -> BrowseSSDCallMessage1ReturnReceivingEnd BrowseSSDCallMessage1)
+		CallMessage::BrowseSSDCallMessage3(getBlog BrowseSSDCallMessage3SendingEnd -> BrowseSSDExecution2StartEnd)
+		ReturnMessage::BrowseSSDCallMessage3Return(BrowseSSDExecution2FinishEnd -> BrowseSSDCallMessage3ReturnReceivingEnd BrowseSSDCallMessage3)
+
+		Execution::BrowseSSDExecution1(BrowseService BrowseSSDExecution1StartEnd BrowseSSDExecution1FinishEnd)
+		Execution::BrowseSSDExecution2(BrowseService BrowseSSDExecution2StartEnd BrowseSSDExecution2FinishEnd)
+
+		MessageEnd::BrowseSSDCallMessage1SendingEnd(Visitor BrowseSSDCallMessage1)
+		ExecutionEnd::BrowseSSDExecution1StartEnd(BrowseService BrowseSSDExecution1)
+		ExecutionEnd::BrowseSSDExecution1FinishEnd(BrowseService BrowseSSDExecution1)
+		MessageEnd::BrowseSSDCallMessage1ReturnReceivingEnd(Visitor BrowseSSDCallMessage1Return)
+		MessageEnd::BrowseSSDCallMessage3SendingEnd(Visitor BrowseSSDCallMessage3)
+		ExecutionEnd::BrowseSSDExecution2StartEnd(BrowseService BrowseSSDExecution2)
+		ExecutionEnd::BrowseSSDExecution2FinishEnd(BrowseService BrowseSSDExecution2)
+		MessageEnd::BrowseSSDCallMessage3ReturnReceivingEnd(Visitor BrowseSSDCallMessage3Return)
+
+	}
+
+	Service UserManagementService {
+
+		[Operation]
+		addUser(userId, userName, password, email)
+		findUser(userId)
+		deleteUser(userId)
+		updateUser(userId, userName, password, email)
+
+	}
+
+	Service TagManagementService {
+
+		[Operation]
+		addTag(tagId, tagName)
+		findTag(tagId)
+		findTagByName(tagName)
+		getAllTags()
+		deleteTag(tagId)
+
+	}
+
+	Service BrowseService {
+
+		[Operation]
+		getBlog(blogId)
+		getAllBlog()
+
+	}
+
+	Service BlogManagementService {
+
+		[Operation]
+		addBlog(blogId, tagId, title, content)
+		updateBlog(blogId, title, content)
+		deleteBlog(blogId)
+		linkFile(blogId, fileId)
+
+	}
+
+	Service LikeManagementService {
+
+		[Operation]
+		likeBlog(likeId, blogId)
+		dislikeBlog(likeId)
+		getLikeBlogs()
+
+	}
+
+	Service FileManagementService {
+
+		[Operation]
+		getFileById(fileId)
+		getFileByName(fileName)
+		addFile(fileId, fileName, content)
+		deleteFile(fileId)
+
+	}
+
+	Service ThirdPartyServices {
+
+	}
+
+	Service SpringBlogSystem {
+
+		[Operation]
+		login(userId, password)
+
+		[TempProperty]
+		LoginUser: User
+
+	}
+
+	Contract SpringBlogSystem::login(userId: String, password: String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId and u.Password = password)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			self.LoginUser = user and
+			result = true
+	}
+
+	Contract UserManagementService::addUser(userId: String, userName: String, password: String, email: String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = true
+		postcondition:
+			let u:User in
+			u.oclIsNew() and
+			u.UserId = userId and
+			u.UserName = userName and
+			u.Password = password and
+			u.Email = email and
+			User.allInstance()->includes(u) and
+			result = true
+	}
+
+	Contract UserManagementService::findUser(userId : String) : User {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			result = user
+	}
+
+	Contract UserManagementService::deleteUser(userId: String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			User.allInstance()->excludes(user) and
+			result = true
+	}
+
+	Contract UserManagementService::updateUser(userId: String, userName: String, password: String, email: String) : Boolean {
+
+		definition:
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = false
+		postcondition:
+			user.UserName = userName and
+			user.Password = password and
+			user.Email = email and
+			result = true
+	}
+
+	Contract TagManagementService::addTag(tagId:String, tagName : String) : Boolean {
+
+		definition:
+			tag:Tag = Tag.allInstance()->any(t:Tag | t.TagId = tagId)
+
+		precondition:
+			tag.oclIsUndefined() = true
+		postcondition:
+			let t:Tag in
+			t.oclIsNew() and
+			t.TagId = tagId and
+			t.TagName = tagName and
+			Tag.allInstance()->includes(t) and
+			result = true
+	}
+
+	Contract TagManagementService::findTag(tagId : String) : Tag {
+
+		definition:
+			tag:Tag = Tag.allInstance()->any(t:Tag | t.TagId = tagId)
+
+		precondition:
+			tag.oclIsUndefined() = false
+		postcondition:
+			result = tag
+	}
+
+	Contract TagManagementService::findTagByName(tagName : String) : Sequence(Tag) {
+
+		definition:
+			tags:Set(Tag) = Tag.allInstance()->select(t:Tag | t.TagName = tagName)
+
+		precondition:
+			true
+		postcondition:
+			result = tags
+	}
+
+	Contract TagManagementService::getAllTags() : Sequence(Tag) {
+
+		precondition:
+			true
+		postcondition:
+			result = Tag.allInstance()
+	}
+
+	Contract BrowseService::getBlog(blogId : String) : Blog {
+
+		definition:
+			blog:Blog = Blog.allInstance()->any(b:Blog | b.BlogId = blogId)
+
+		precondition:
+			blog.oclIsUndefined() = false
+		postcondition:
+			result = blog
+	}
+
+	Contract BlogManagementService::addBlog(blogId: String, tagId: String, title : String, content : String) : Boolean {
+
+		definition:
+			blog:Blog = Blog.allInstance()->any(b:Blog | b.BlogId = blogId),
+			tag:Tag = Tag.allInstance()->any(t:Tag | t.TagId = tagId)
+
+		precondition:
+			blog.oclIsUndefined() = true and
+			LoginUser.oclIsUndefined() = false and
+			tag.oclIsUndefined() = false
+		postcondition:
+			let b:Blog in
+			b.oclIsNew() and
+			b.BlogId = blogId and
+			b.User = LoginUser and
+			b.Tag = tag and
+			b.Title = title and
+			b.Content = content and
+			Blog.allInstance()->includes(b) and
+			result = true
+	}
+
+	Contract BrowseService::getAllBlog() : Sequence(Blog) {
+
+		precondition:
+			true
+		postcondition:
+			result = Blog.allInstance()
+	}
+
+	Contract BlogManagementService::updateBlog(blogId: String, title : String, content : String) : Boolean {
+
+		definition:
+			blog:Blog = Blog.allInstance()->any(b:Blog | b.BlogId = blogId)
+
+		precondition:
+			blog.oclIsUndefined() = false and
+			LoginUser.oclIsUndefined() = false and
+			blog.User.UserId = LoginUser.UserId
+		postcondition:
+			blog.Title = title and
+			blog.Content = content and
+			result = true
+	}
+
+	Contract BlogManagementService::deleteBlog(blogId : String) : Boolean {
+
+		definition:
+			blog:Blog = Blog.allInstance()->any(b:Blog | b.BlogId = blogId)
+
+		precondition:
+			blog.oclIsUndefined() = false and
+			LoginUser.oclIsUndefined() = false and
+			blog.User.UserId = LoginUser.UserId
+		postcondition:
+			Blog.allInstance()->excludes(blog) and
+			result = true
+	}
+
+	Contract LikeManagementService::getLikeBlogs() : Sequence(Like) {
+
+		precondition:
+			LoginUser.oclIsUndefined() = false
+		postcondition:
+			result = Like.allInstance()->select(l:Like | l.User.UserId = LoginUser.UserId)
+	}
+
+	Contract LikeManagementService::likeBlog(likeId:String, blogId : String) : Boolean {
+
+		definition:
+			blog:Blog = Blog.allInstance()->any(b:Blog | b.BlogId = blogId),
+			like:Like = Like.allInstance()->any(l:Like | l.Blog = blog and l.User = LoginUser)
+
+		precondition:
+			LoginUser.oclIsUndefined() = false and
+			blog.oclIsUndefined() = false and
+			like.oclIsUndefined() = true
+		postcondition:
+			let l:Like in
+			l.oclIsNew() and
+			l.LikeId = likeId and
+			l.User = LoginUser and
+			l.Blog = blog and
+			Like.allInstance()->includes(l) and
+			result = true
+	}
+
+	Contract LikeManagementService::dislikeBlog(likeId : String) : Boolean {
+
+		definition:
+			like:Like = Like.allInstance()->any(l:Like | l.LikeId = likeId)
+
+		precondition:
+			like.oclIsUndefined() = false and
+			LoginUser.oclIsUndefined() = false and
+			like.User.UserId = LoginUser.UserId
+		postcondition:
+			Like.allInstance()->excludes(like) and
+			result = true
+	}
+
+	Contract FileManagementService::getFileById(fileId : String) : StoredFile {
+
+		definition:
+			file:StoredFile = StoredFile.allInstance()->any(f:StoredFile| f.FileId = fileId)
+
+		precondition:
+			file.oclIsUndefined() = false
+		postcondition:
+			result = file
+	}
+
+	Contract FileManagementService::getFileByName(fileName : String) : Sequence(StoredFile) {
+
+		definition:
+			files:Sequence(StoredFile) = StoredFile.allInstance()->select(f:StoredFile| f.FileName = fileName)
+
+		precondition:
+			true
+		postcondition:
+			result = files
+	}
+
+	Contract FileManagementService::addFile(fileId: String, fileName : String, content : String) : Boolean {
+
+		precondition:
+			LoginUser.oclIsUndefined() = false
+		postcondition:
+			let f:StoredFile in
+			f.oclIsNew() and
+			f.FileId = fileId and
+			f.FileName = fileName and
+			f.Content = content and
+			f.User = LoginUser and
+			StoredFile.allInstance()->includes(f) and
+			result = true
+	}
+
+	Contract FileManagementService::deleteFile(fileId : String) : Boolean {
+
+		definition:
+			file:StoredFile = StoredFile.allInstance()->any(f:StoredFile| f.FileId = fileId)
+
+		precondition:
+			LoginUser.oclIsUndefined() = false and
+			file.User.UserId = LoginUser.UserId
+		postcondition:
+			StoredFile.allInstance()->excludes(file) and
+			result = true
+	}
+
+	Contract BlogManagementService::linkFile(blogId : String, fileId : String) : Boolean {
+
+		definition:
+			blog:Blog = Blog.allInstance()->any(b:Blog | b.BlogId = blogId),
+			file:StoredFile = StoredFile.allInstance()->any(f:StoredFile | f.FileId = fileId)
+
+		precondition:
+			blog.oclIsUndefined() = false and
+			file.oclIsUndefined() = false and
+			LoginUser.oclIsUndefined() = false
+		postcondition:
+			blog.Files->includes(file) and
+			result = true
+	}
+
+	Contract TagManagementService::deleteTag(tagId : String) : Boolean {
+
+		definition:
+			blogs:Sequence(Blog) = Blog.allInstance()->select(b:Blog | b.Tag.TagId = tagId),
+			tag:Tag = Tag.allInstance()->any(t:Tag | t.TagId = tagId)
+
+		precondition:
+			blogs.isEmpty() and
+			tag.oclIsUndefined() = false
+		postcondition:
+			Tag.allInstance()->excludes(tag) and
+			result = true
+	}
+
+}
+
+DomainModel SpringBlog {
+
+	Entity User {
+		UserId: String
+		UserName: String
+		Email : String
+		Password : String
+	}
+
+	Entity Tag {
+		TagId: String
+		TagName : String
+	}
+
+	Entity StoredFile {
+		FileId: String
+		FileName: String
+		Content: String
+
+		[Refer]
+		User : User Association
+	}
+
+	Entity Blog {
+		BlogId: String
+		Title : String
+		Content : String
+
+		[Refer]
+		User : User Association
+		Tag : Tag Association
+		Files : StoredFile* Association
+	}
+
+	Entity Like {
+		LikeId: String
+
+		[Refer]
+		User : User Association
+		Blog : Blog Association
+	}
+
+}
+

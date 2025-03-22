@@ -1,0 +1,1265 @@
+UseCaseModel ZBlog {
+
+	UC::manageApplications() definedBySSD(ManageApplicationsSSD) relatedService(ManageApplicationsService) @Description("Administrators can manage applications, plugins, and themes within the Z-BlogPHP SystemSetting")
+	UC::manageCategories() definedBySSD(ManageCategoriesSSD) relatedService(ManageCategoriesService) @Description("Administrators can create, update, delete, and list categories within the Z-BlogPHP SystemSetting")
+	UC::manageComments() definedBySSD(ManageCommentsSSD) relatedService(ManageCommentsService) @Description("Administrators can manage comments, including creating, updating, deleting, and listing comments")
+	UC::manageMembers() definedBySSD(ManageMembersSSD) relatedService(ManageMembersService) @Description("Administrators can manage members, including creating, updating, deleting, and listing members")
+	UC::manageModules() definedBySSD(ManageModulesSSD) relatedService(ManageModulesService) @Description("Administrators can manage modules, including creating, updating, deleting, and listing modules")
+	UC::managePosts() definedBySSD(ManagePostsSSD) relatedService(ManagePostsService) @Description("Administrators can manage posts and pages, including creating, updating, deleting, and listing posts")
+	UC::manageSystemSettings() definedBySSD(ManageSystemSettingsSSD) relatedService(ManageSystemSettingsService) @Description("Administrators can manage SystemSetting settings and retrieve SystemSetting information")
+	UC::manageTags() definedBySSD(ManageTagsSSD) relatedService(ManageTagsService) @Description("Administrators can manage tags, including creating, updating, deleting, and listing tags")
+	UC::manageUploads() definedBySSD(ManageUploadsSSD) relatedService(ManageUploadsService) @Description("Administrators can manage uploads, including creating, updating, deleting, and listing uploads")
+
+	Actor Administrator("Administrator") {
+		@Description("An administrator who manages various aspects of the Z-BlogPHP SystemSetting, including applications, categories, comments, members, modules, posts, SystemSetting settings, tags, and uploads")
+        manageApplications
+		manageCategories
+		manageComments
+		manageMembers
+		manageModules
+		managePosts
+		manageSystemSettings
+		manageTags
+		manageUploads
+	}
+
+	Interaction ManageApplicationsSSD {
+
+		[Participants: Administrator ManageApplicationsService]
+
+		CallMessage::getApp(getApp getAppSender->getAppStart)
+		ReturnMessage::getAppReturn(getAppFinish->getAppReturnReceiver getApp)
+//		CallMessage::enablePlugin(enablePlugin enablePluginSender->enablePluginStart)
+//		ReturnMessage::enablePluginReturn(enablePluginFinish->enablePluginReturnReceiver enablePlugin)
+//		CallMessage::disablePlugin(disablePlugin disablePluginSender->disablePluginStart)
+//		ReturnMessage::disablePluginReturn(disablePluginFinish->disablePluginReturnReceiver disablePlugin)
+//		CallMessage::setTheme(setTheme setThemeSender->setThemeStart)
+//		ReturnMessage::setThemeReturn(setThemeFinish->setThemeReturnReceiver setTheme)
+		CallMessage::getApps(getApps getAppsSender->getAppsStart)
+		ReturnMessage::getAppsReturn(getAppsFinish->getAppsReturnReceiver getApps)
+
+//		CallMessage::getPlugins(getPlugins getPluginsSender->getPluginsStart)
+//		ReturnMessage::getPluginsReturn(getPluginsFinish->getPluginsReturnReceiver getPlugins)
+//		CallMessage::getThemes(getThemes getThemesSender->getThemesStart)
+//		ReturnMessage::getThemesReturn(getThemesFinish->getThemesReturnReceiver getThemes)
+		Execution::getApp(ManageApplicationsService getAppStart getAppFinish)
+//		Execution::enablePlugin(ManageApplicationsService enablePluginStart enablePluginFinish)
+//		Execution::disablePlugin(ManageApplicationsService disablePluginStart disablePluginFinish)
+//		Execution::setTheme(ManageApplicationsService setThemeStart setThemeFinish)
+		Execution::getApps(ManageApplicationsService getAppsStart getAppsFinish)
+
+//		Execution::getPlugins(ManageApplicationsService getPluginsStart getPluginsFinish)
+//		Execution::getThemes(ManageApplicationsService getThemesStart getThemesFinish)
+		MessageEnd::getAppSender(Administrator getApp)
+		ExecutionEnd::getAppStart(ManageApplicationsService getApp)
+		ExecutionEnd::getAppFinish(ManageApplicationsService getApp)
+		MessageEnd::getAppReturnReceiver(Administrator getAppReturn)
+//		MessageEnd::enablePluginSender(Administrator enablePlugin)
+//		ExecutionEnd::enablePluginStart(ManageApplicationsService enablePlugin)
+//		ExecutionEnd::enablePluginFinish(ManageApplicationsService enablePlugin)
+//		MessageEnd::enablePluginReturnReceiver(Administrator enablePluginReturn)
+//		MessageEnd::disablePluginSender(Administrator disablePlugin)
+//		ExecutionEnd::disablePluginStart(ManageApplicationsService disablePlugin)
+//		ExecutionEnd::disablePluginFinish(ManageApplicationsService disablePlugin)
+//		MessageEnd::disablePluginReturnReceiver(Administrator disablePluginReturn)
+//		MessageEnd::setThemeSender(Administrator setTheme)
+//		ExecutionEnd::setThemeStart(ManageApplicationsService setTheme)
+//		ExecutionEnd::setThemeFinish(ManageApplicationsService setTheme)
+//		MessageEnd::setThemeReturnReceiver(Administrator setThemeReturn)
+		MessageEnd::getAppsSender(Administrator getApps)
+		ExecutionEnd::getAppsStart(ManageApplicationsService getApps)
+		ExecutionEnd::getAppsFinish(ManageApplicationsService getApps)
+		MessageEnd::getAppsReturnReceiver(Administrator getAppsReturn)
+
+//		MessageEnd::getPluginsSender(Administrator getPlugins)
+//		ExecutionEnd::getPluginsStart(ManageApplicationsService getPlugins)
+//		ExecutionEnd::getPluginsFinish(ManageApplicationsService getPlugins)
+//		MessageEnd::getPluginsReturnReceiver(Administrator getPluginsReturn)
+//		MessageEnd::getThemesSender(Administrator getThemes)
+//		ExecutionEnd::getThemesStart(ManageApplicationsService getThemes)
+//		ExecutionEnd::getThemesFinish(ManageApplicationsService getThemes)
+//		MessageEnd::getThemesReturnReceiver(Administrator getThemesReturn)
+	}
+
+	Interaction ManageCategoriesSSD {
+
+		[Participants: Administrator ManageCategoriesService]
+
+		CallMessage::getCategory(getCategory getCategorySender->getCategoryStart)
+		ReturnMessage::getCategoryReturn(getCategoryFinish->getCategoryReturnReceiver getCategory)
+		CallMessage::createOrUpdateCategory(createOrUpdateCategory createOrUpdateCategorySender->createOrUpdateCategoryStart)
+		ReturnMessage::createOrUpdateCategoryReturn(createOrUpdateCategoryFinish->createOrUpdateCategoryReturnReceiver createOrUpdateCategory)
+		CallMessage::deleteCategory(deleteCategory deleteCategorySender->deleteCategoryStart)
+		ReturnMessage::deleteCategoryReturn(deleteCategoryFinish->deleteCategoryReturnReceiver deleteCategory)
+		CallMessage::listCategories(listCategories listCategoriesSender->listCategoriesStart)
+		ReturnMessage::listCategoriesReturn(listCategoriesFinish->listCategoriesReturnReceiver listCategories)
+
+		Execution::getCategory(ManageCategoriesService getCategoryStart getCategoryFinish)
+		Execution::createOrUpdateCategory(ManageCategoriesService createOrUpdateCategoryStart createOrUpdateCategoryFinish)
+		Execution::deleteCategory(ManageCategoriesService deleteCategoryStart deleteCategoryFinish)
+		Execution::listCategories(ManageCategoriesService listCategoriesStart listCategoriesFinish)
+
+		MessageEnd::getCategorySender(Administrator getCategory)
+		ExecutionEnd::getCategoryStart(ManageCategoriesService getCategory)
+		ExecutionEnd::getCategoryFinish(ManageCategoriesService getCategory)
+		MessageEnd::getCategoryReturnReceiver(Administrator getCategoryReturn)
+		MessageEnd::createOrUpdateCategorySender(Administrator createOrUpdateCategory)
+		ExecutionEnd::createOrUpdateCategoryStart(ManageCategoriesService createOrUpdateCategory)
+		ExecutionEnd::createOrUpdateCategoryFinish(ManageCategoriesService createOrUpdateCategory)
+		MessageEnd::createOrUpdateCategoryReturnReceiver(Administrator createOrUpdateCategoryReturn)
+		MessageEnd::deleteCategorySender(Administrator deleteCategory)
+		ExecutionEnd::deleteCategoryStart(ManageCategoriesService deleteCategory)
+		ExecutionEnd::deleteCategoryFinish(ManageCategoriesService deleteCategory)
+		MessageEnd::deleteCategoryReturnReceiver(Administrator deleteCategoryReturn)
+		MessageEnd::listCategoriesSender(Administrator listCategories)
+		ExecutionEnd::listCategoriesStart(ManageCategoriesService listCategories)
+		ExecutionEnd::listCategoriesFinish(ManageCategoriesService listCategories)
+		MessageEnd::listCategoriesReturnReceiver(Administrator listCategoriesReturn)
+
+	}
+
+	Interaction ManageCommentsSSD {
+
+		[Participants: Administrator ManageCommentsService]
+
+		CallMessage::getComment(getComment getCommentSender->getCommentStart)
+		ReturnMessage::getCommentReturn(getCommentFinish->getCommentReturnReceiver getComment)
+		CallMessage::createComment(createComment createCommentSender->createCommentStart)
+		ReturnMessage::createCommentReturn(createCommentFinish->createCommentReturnReceiver createComment)
+		CallMessage::deleteComment(deleteComment deleteCommentSender->deleteCommentStart)
+		ReturnMessage::deleteCommentReturn(deleteCommentFinish->deleteCommentReturnReceiver deleteComment)
+		CallMessage::listComments(listComments listCommentsSender->listCommentsStart)
+		ReturnMessage::listCommentsReturn(listCommentsFinish->listCommentsReturnReceiver listComments)
+		CallMessage::checkComment(checkComment checkCommentSender->checkCommentStart)
+		ReturnMessage::checkCommentReturn(checkCommentFinish->checkCommentReturnReceiver checkComment)
+		CallMessage::batchComment(batchComment batchCommentSender->batchCommentStart)
+		ReturnMessage::batchCommentReturn(batchCommentFinish->batchCommentReturnReceiver batchComment)
+
+		Execution::getComment(ManageCommentsService getCommentStart getCommentFinish)
+		Execution::createComment(ManageCommentsService createCommentStart createCommentFinish)
+		Execution::deleteComment(ManageCommentsService deleteCommentStart deleteCommentFinish)
+		Execution::listComments(ManageCommentsService listCommentsStart listCommentsFinish)
+		Execution::checkComment(ManageCommentsService checkCommentStart checkCommentFinish)
+		Execution::batchComment(ManageCommentsService batchCommentStart batchCommentFinish)
+
+		MessageEnd::getCommentSender(Administrator getComment)
+		ExecutionEnd::getCommentStart(ManageCommentsService getComment)
+		ExecutionEnd::getCommentFinish(ManageCommentsService getComment)
+		MessageEnd::getCommentReturnReceiver(Administrator getCommentReturn)
+		MessageEnd::createCommentSender(Administrator createComment)
+		ExecutionEnd::createCommentStart(ManageCommentsService createComment)
+		ExecutionEnd::createCommentFinish(ManageCommentsService createComment)
+		MessageEnd::createCommentReturnReceiver(Administrator createCommentReturn)
+		MessageEnd::deleteCommentSender(Administrator deleteComment)
+		ExecutionEnd::deleteCommentStart(ManageCommentsService deleteComment)
+		ExecutionEnd::deleteCommentFinish(ManageCommentsService deleteComment)
+		MessageEnd::deleteCommentReturnReceiver(Administrator deleteCommentReturn)
+		MessageEnd::listCommentsSender(Administrator listComments)
+		ExecutionEnd::listCommentsStart(ManageCommentsService listComments)
+		ExecutionEnd::listCommentsFinish(ManageCommentsService listComments)
+		MessageEnd::listCommentsReturnReceiver(Administrator listCommentsReturn)
+		MessageEnd::checkCommentSender(Administrator checkComment)
+		ExecutionEnd::checkCommentStart(ManageCommentsService checkComment)
+		ExecutionEnd::checkCommentFinish(ManageCommentsService checkComment)
+		MessageEnd::checkCommentReturnReceiver(Administrator checkCommentReturn)
+		MessageEnd::batchCommentSender(Administrator batchComment)
+		ExecutionEnd::batchCommentStart(ManageCommentsService batchComment)
+		ExecutionEnd::batchCommentFinish(ManageCommentsService batchComment)
+		MessageEnd::batchCommentReturnReceiver(Administrator batchCommentReturn)
+
+	}
+
+	Interaction ManageMembersSSD {
+
+		[Participants: Administrator ManageMembersService]
+
+		CallMessage::login(login loginSender->loginStart)
+		ReturnMessage::loginReturn(loginFinish->loginReturnReceiver login)
+		CallMessage::logout(logout logoutSender->logoutStart)
+		ReturnMessage::logoutReturn(logoutFinish->logoutReturnReceiver logout)
+		CallMessage::createOrUpdateMember(createOrUpdateMember createOrUpdateMemberSender->createOrUpdateMemberStart)
+		ReturnMessage::createOrUpdateMemberReturn(createOrUpdateMemberFinish->createOrUpdateMemberReturnReceiver createOrUpdateMember)
+		CallMessage::getMember(getMember getMemberSender->getMemberStart)
+		ReturnMessage::getMemberReturn(getMemberFinish->getMemberReturnReceiver getMember)
+		CallMessage::deleteMember(deleteMember deleteMemberSender->deleteMemberStart)
+		ReturnMessage::deleteMemberReturn(deleteMemberFinish->deleteMemberReturnReceiver deleteMember)
+		CallMessage::listMembers(listMembers listMembersSender->listMembersStart)
+		ReturnMessage::listMembersReturn(listMembersFinish->listMembersReturnReceiver listMembers)
+		CallMessage::getMemberAuth(getMemberAuth getMemberAuthSender->getMemberAuthStart)
+		ReturnMessage::getMemberAuthReturn(getMemberAuthFinish->getMemberAuthReturnReceiver getMemberAuth)
+
+		Execution::login(ManageMembersService loginStart loginFinish)
+		Execution::logout(ManageMembersService logoutStart logoutFinish)
+		Execution::createOrUpdateMember(ManageMembersService createOrUpdateMemberStart createOrUpdateMemberFinish)
+		Execution::getMember(ManageMembersService getMemberStart getMemberFinish)
+		Execution::deleteMember(ManageMembersService deleteMemberStart deleteMemberFinish)
+		Execution::listMembers(ManageMembersService listMembersStart listMembersFinish)
+		Execution::getMemberAuth(ManageMembersService getMemberAuthStart getMemberAuthFinish)
+
+		MessageEnd::loginSender(Administrator login)
+		ExecutionEnd::loginStart(ManageMembersService login)
+		ExecutionEnd::loginFinish(ManageMembersService login)
+		MessageEnd::loginReturnReceiver(Administrator loginReturn)
+		MessageEnd::logoutSender(Administrator logout)
+		ExecutionEnd::logoutStart(ManageMembersService logout)
+		ExecutionEnd::logoutFinish(ManageMembersService logout)
+		MessageEnd::logoutReturnReceiver(Administrator logoutReturn)
+		MessageEnd::createOrUpdateMemberSender(Administrator createOrUpdateMember)
+		ExecutionEnd::createOrUpdateMemberStart(ManageMembersService createOrUpdateMember)
+		ExecutionEnd::createOrUpdateMemberFinish(ManageMembersService createOrUpdateMember)
+		MessageEnd::createOrUpdateMemberReturnReceiver(Administrator createOrUpdateMemberReturn)
+		MessageEnd::getMemberSender(Administrator getMember)
+		ExecutionEnd::getMemberStart(ManageMembersService getMember)
+		ExecutionEnd::getMemberFinish(ManageMembersService getMember)
+		MessageEnd::getMemberReturnReceiver(Administrator getMemberReturn)
+		MessageEnd::deleteMemberSender(Administrator deleteMember)
+		ExecutionEnd::deleteMemberStart(ManageMembersService deleteMember)
+		ExecutionEnd::deleteMemberFinish(ManageMembersService deleteMember)
+		MessageEnd::deleteMemberReturnReceiver(Administrator deleteMemberReturn)
+		MessageEnd::listMembersSender(Administrator listMembers)
+		ExecutionEnd::listMembersStart(ManageMembersService listMembers)
+		ExecutionEnd::listMembersFinish(ManageMembersService listMembers)
+		MessageEnd::listMembersReturnReceiver(Administrator listMembersReturn)
+		MessageEnd::getMemberAuthSender(Administrator getMemberAuth)
+		ExecutionEnd::getMemberAuthStart(ManageMembersService getMemberAuth)
+		ExecutionEnd::getMemberAuthFinish(ManageMembersService getMemberAuth)
+		MessageEnd::getMemberAuthReturnReceiver(Administrator getMemberAuthReturn)
+
+	}
+
+	Interaction ManageModulesSSD {
+
+		[Participants: Administrator ManageModulesService]
+
+		CallMessage::getModule(getModule getModuleSender->getModuleStart)
+		ReturnMessage::getModuleReturn(getModuleFinish->getModuleReturnReceiver getModule)
+		CallMessage::createOrUpdateModule(createOrUpdateModule createOrUpdateModuleSender->createOrUpdateModuleStart)
+		ReturnMessage::createOrUpdateModuleReturn(createOrUpdateModuleFinish->createOrUpdateModuleReturnReceiver createOrUpdateModule)
+		CallMessage::deleteModule(deleteModule deleteModuleSender->deleteModuleStart)
+		ReturnMessage::deleteModuleReturn(deleteModuleFinish->deleteModuleReturnReceiver deleteModule)
+		CallMessage::listModules(listModules listModulesSender->listModulesStart)
+		ReturnMessage::listModulesReturn(listModulesFinish->listModulesReturnReceiver listModules)
+		CallMessage::setSidebar(setSidebar setSidebarSender->setSidebarStart)
+		ReturnMessage::setSidebarReturn(setSidebarFinish->setSidebarReturnReceiver setSidebar)
+		CallMessage::listSidebar(listSidebar listSidebarSender->listSidebarStart)
+		ReturnMessage::listSidebarReturn(listSidebarFinish->listSidebarReturnReceiver listSidebar)
+
+		Execution::getModule(ManageModulesService getModuleStart getModuleFinish)
+		Execution::createOrUpdateModule(ManageModulesService createOrUpdateModuleStart createOrUpdateModuleFinish)
+		Execution::deleteModule(ManageModulesService deleteModuleStart deleteModuleFinish)
+		Execution::listModules(ManageModulesService listModulesStart listModulesFinish)
+		Execution::setSidebar(ManageModulesService setSidebarStart setSidebarFinish)
+		Execution::listSidebar(ManageModulesService listSidebarStart listSidebarFinish)
+
+		MessageEnd::getModuleSender(Administrator getModule)
+		ExecutionEnd::getModuleStart(ManageModulesService getModule)
+		ExecutionEnd::getModuleFinish(ManageModulesService getModule)
+		MessageEnd::getModuleReturnReceiver(Administrator getModuleReturn)
+		MessageEnd::createOrUpdateModuleSender(Administrator createOrUpdateModule)
+		ExecutionEnd::createOrUpdateModuleStart(ManageModulesService createOrUpdateModule)
+		ExecutionEnd::createOrUpdateModuleFinish(ManageModulesService createOrUpdateModule)
+		MessageEnd::createOrUpdateModuleReturnReceiver(Administrator createOrUpdateModuleReturn)
+		MessageEnd::deleteModuleSender(Administrator deleteModule)
+		ExecutionEnd::deleteModuleStart(ManageModulesService deleteModule)
+		ExecutionEnd::deleteModuleFinish(ManageModulesService deleteModule)
+		MessageEnd::deleteModuleReturnReceiver(Administrator deleteModuleReturn)
+		MessageEnd::listModulesSender(Administrator listModules)
+		ExecutionEnd::listModulesStart(ManageModulesService listModules)
+		ExecutionEnd::listModulesFinish(ManageModulesService listModules)
+		MessageEnd::listModulesReturnReceiver(Administrator listModulesReturn)
+		MessageEnd::setSidebarSender(Administrator setSidebar)
+		ExecutionEnd::setSidebarStart(ManageModulesService setSidebar)
+		ExecutionEnd::setSidebarFinish(ManageModulesService setSidebar)
+		MessageEnd::setSidebarReturnReceiver(Administrator setSidebarReturn)
+		MessageEnd::listSidebarSender(Administrator listSidebar)
+		ExecutionEnd::listSidebarStart(ManageModulesService listSidebar)
+		ExecutionEnd::listSidebarFinish(ManageModulesService listSidebar)
+		MessageEnd::listSidebarReturnReceiver(Administrator listSidebarReturn)
+
+	}
+
+	Interaction ManagePostsSSD {
+
+		[Participants: Administrator ManagePostsService]
+
+		CallMessage::getPost(getPost getPostSender->getPostStart)
+		ReturnMessage::getPostReturn(getPostFinish->getPostReturnReceiver getPost)
+		CallMessage::createOrUpdatePost(createOrUpdatePost createOrUpdatePostSender->createOrUpdatePostStart)
+		ReturnMessage::createOrUpdatePostReturn(createOrUpdatePostFinish->createOrUpdatePostReturnReceiver createOrUpdatePost)
+		CallMessage::deletePost(deletePost deletePostSender->deletePostStart)
+		ReturnMessage::deletePostReturn(deletePostFinish->deletePostReturnReceiver deletePost)
+		CallMessage::listPosts(listPosts listPostsSender->listPostsStart)
+		ReturnMessage::listPostsReturn(listPostsFinish->listPostsReturnReceiver listPosts)
+
+		Execution::getPost(ManagePostsService getPostStart getPostFinish)
+		Execution::createOrUpdatePost(ManagePostsService createOrUpdatePostStart createOrUpdatePostFinish)
+		Execution::deletePost(ManagePostsService deletePostStart deletePostFinish)
+		Execution::listPosts(ManagePostsService listPostsStart listPostsFinish)
+
+		MessageEnd::getPostSender(Administrator getPost)
+		ExecutionEnd::getPostStart(ManagePostsService getPost)
+		ExecutionEnd::getPostFinish(ManagePostsService getPost)
+		MessageEnd::getPostReturnReceiver(Administrator getPostReturn)
+		MessageEnd::createOrUpdatePostSender(Administrator createOrUpdatePost)
+		ExecutionEnd::createOrUpdatePostStart(ManagePostsService createOrUpdatePost)
+		ExecutionEnd::createOrUpdatePostFinish(ManagePostsService createOrUpdatePost)
+		MessageEnd::createOrUpdatePostReturnReceiver(Administrator createOrUpdatePostReturn)
+		MessageEnd::deletePostSender(Administrator deletePost)
+		ExecutionEnd::deletePostStart(ManagePostsService deletePost)
+		ExecutionEnd::deletePostFinish(ManagePostsService deletePost)
+		MessageEnd::deletePostReturnReceiver(Administrator deletePostReturn)
+		MessageEnd::listPostsSender(Administrator listPosts)
+		ExecutionEnd::listPostsStart(ManagePostsService listPosts)
+		ExecutionEnd::listPostsFinish(ManagePostsService listPosts)
+		MessageEnd::listPostsReturnReceiver(Administrator listPostsReturn)
+
+	}
+
+	Interaction ManageSystemSettingsSSD {
+
+		[Participants: Administrator ManageSystemSettingsService]
+
+		CallMessage::getBasicInfo(getBasicInfo getBasicInfoSender->getBasicInfoStart)
+		ReturnMessage::getBasicInfoReturn(getBasicInfoFinish->getBasicInfoReturnReceiver getBasicInfo)
+		CallMessage::getSystemInfo(getSystemInfo getSystemInfoSender->getSystemInfoStart)
+		ReturnMessage::getSystemInfoReturn(getSystemInfoFinish->getSystemInfoReturnReceiver getSystemInfo)
+		CallMessage::clearCacheAndRecompile(clearCacheAndRecompile clearCacheAndRecompileSender->clearCacheAndRecompileStart)
+		ReturnMessage::clearCacheAndRecompileReturn(clearCacheAndRecompileFinish->clearCacheAndRecompileReturnReceiver clearCacheAndRecompile)
+		CallMessage::getCommonTags(getCommonTags getCommonTagsSender->getCommonTagsStart)
+		ReturnMessage::getCommonTagsReturn(getCommonTagsFinish->getCommonTagsReturnReceiver getCommonTags)
+		CallMessage::getSettings(getSettings getSettingsSender->getSettingsStart)
+		ReturnMessage::getSettingsReturn(getSettingsFinish->getSettingsReturnReceiver getSettings)
+		CallMessage::updateSettings(updateSettings updateSettingsSender->updateSettingsStart)
+		ReturnMessage::updateSettingsReturn(updateSettingsFinish->updateSettingsReturnReceiver updateSettings)
+
+		Execution::getBasicInfo(ManageSystemSettingsService getBasicInfoStart getBasicInfoFinish)
+		Execution::getSystemInfo(ManageSystemSettingsService getSystemInfoStart getSystemInfoFinish)
+		Execution::clearCacheAndRecompile(ManageSystemSettingsService clearCacheAndRecompileStart clearCacheAndRecompileFinish)
+		Execution::getCommonTags(ManageSystemSettingsService getCommonTagsStart getCommonTagsFinish)
+		Execution::getSettings(ManageSystemSettingsService getSettingsStart getSettingsFinish)
+		Execution::updateSettings(ManageSystemSettingsService updateSettingsStart updateSettingsFinish)
+
+		MessageEnd::getBasicInfoSender(Administrator getBasicInfo)
+		ExecutionEnd::getBasicInfoStart(ManageSystemSettingsService getBasicInfo)
+		ExecutionEnd::getBasicInfoFinish(ManageSystemSettingsService getBasicInfo)
+		MessageEnd::getBasicInfoReturnReceiver(Administrator getBasicInfoReturn)
+		MessageEnd::getSystemInfoSender(Administrator getSystemInfo)
+		ExecutionEnd::getSystemInfoStart(ManageSystemSettingsService getSystemInfo)
+		ExecutionEnd::getSystemInfoFinish(ManageSystemSettingsService getSystemInfo)
+		MessageEnd::getSystemInfoReturnReceiver(Administrator getSystemInfoReturn)
+		MessageEnd::clearCacheAndRecompileSender(Administrator clearCacheAndRecompile)
+		ExecutionEnd::clearCacheAndRecompileStart(ManageSystemSettingsService clearCacheAndRecompile)
+		ExecutionEnd::clearCacheAndRecompileFinish(ManageSystemSettingsService clearCacheAndRecompile)
+		MessageEnd::clearCacheAndRecompileReturnReceiver(Administrator clearCacheAndRecompileReturn)
+		MessageEnd::getCommonTagsSender(Administrator getCommonTags)
+		ExecutionEnd::getCommonTagsStart(ManageSystemSettingsService getCommonTags)
+		ExecutionEnd::getCommonTagsFinish(ManageSystemSettingsService getCommonTags)
+		MessageEnd::getCommonTagsReturnReceiver(Administrator getCommonTagsReturn)
+		MessageEnd::getSettingsSender(Administrator getSettings)
+		ExecutionEnd::getSettingsStart(ManageSystemSettingsService getSettings)
+		ExecutionEnd::getSettingsFinish(ManageSystemSettingsService getSettings)
+		MessageEnd::getSettingsReturnReceiver(Administrator getSettingsReturn)
+		MessageEnd::updateSettingsSender(Administrator updateSettings)
+		ExecutionEnd::updateSettingsStart(ManageSystemSettingsService updateSettings)
+		ExecutionEnd::updateSettingsFinish(ManageSystemSettingsService updateSettings)
+		MessageEnd::updateSettingsReturnReceiver(Administrator updateSettingsReturn)
+
+	}
+
+	Interaction ManageTagsSSD {
+
+		[Participants: Administrator ManageTagsService]
+
+		CallMessage::getTag(getTag getTagSender->getTagStart)
+		ReturnMessage::getTagReturn(getTagFinish->getTagReturnReceiver getTag)
+		CallMessage::createOrUpdateTag(createOrUpdateTag createOrUpdateTagSender->createOrUpdateTagStart)
+		ReturnMessage::createOrUpdateTagReturn(createOrUpdateTagFinish->createOrUpdateTagReturnReceiver createOrUpdateTag)
+		CallMessage::deleteTag(deleteTag deleteTagSender->deleteTagStart)
+		ReturnMessage::deleteTagReturn(deleteTagFinish->deleteTagReturnReceiver deleteTag)
+		CallMessage::listTags(listTags listTagsSender->listTagsStart)
+		ReturnMessage::listTagsReturn(listTagsFinish->listTagsReturnReceiver listTags)
+
+		Execution::getTag(ManageTagsService getTagStart getTagFinish)
+		Execution::createOrUpdateTag(ManageTagsService createOrUpdateTagStart createOrUpdateTagFinish)
+		Execution::deleteTag(ManageTagsService deleteTagStart deleteTagFinish)
+		Execution::listTags(ManageTagsService listTagsStart listTagsFinish)
+
+		MessageEnd::getTagSender(Administrator getTag)
+		ExecutionEnd::getTagStart(ManageTagsService getTag)
+		ExecutionEnd::getTagFinish(ManageTagsService getTag)
+		MessageEnd::getTagReturnReceiver(Administrator getTagReturn)
+		MessageEnd::createOrUpdateTagSender(Administrator createOrUpdateTag)
+		ExecutionEnd::createOrUpdateTagStart(ManageTagsService createOrUpdateTag)
+		ExecutionEnd::createOrUpdateTagFinish(ManageTagsService createOrUpdateTag)
+		MessageEnd::createOrUpdateTagReturnReceiver(Administrator createOrUpdateTagReturn)
+		MessageEnd::deleteTagSender(Administrator deleteTag)
+		ExecutionEnd::deleteTagStart(ManageTagsService deleteTag)
+		ExecutionEnd::deleteTagFinish(ManageTagsService deleteTag)
+		MessageEnd::deleteTagReturnReceiver(Administrator deleteTagReturn)
+		MessageEnd::listTagsSender(Administrator listTags)
+		ExecutionEnd::listTagsStart(ManageTagsService listTags)
+		ExecutionEnd::listTagsFinish(ManageTagsService listTags)
+		MessageEnd::listTagsReturnReceiver(Administrator listTagsReturn)
+
+	}
+
+	Interaction ManageUploadsSSD {
+
+		[Participants: Administrator ManageUploadsService]
+
+		CallMessage::getUpload(getUpload getUploadSender->getUploadStart)
+		ReturnMessage::getUploadReturn(getUploadFinish->getUploadReturnReceiver getUpload)
+		CallMessage::createUpload(createUpload createUploadSender->createUploadStart)
+		ReturnMessage::createUploadReturn(createUploadFinish->createUploadReturnReceiver createUpload)
+		CallMessage::deleteUpload(deleteUpload deleteUploadSender->deleteUploadStart)
+		ReturnMessage::deleteUploadReturn(deleteUploadFinish->deleteUploadReturnReceiver deleteUpload)
+		CallMessage::listUploads(listUploads listUploadsSender->listUploadsStart)
+		ReturnMessage::listUploadsReturn(listUploadsFinish->listUploadsReturnReceiver listUploads)
+
+		Execution::getUpload(ManageUploadsService getUploadStart getUploadFinish)
+		Execution::createUpload(ManageUploadsService createUploadStart createUploadFinish)
+		Execution::deleteUpload(ManageUploadsService deleteUploadStart deleteUploadFinish)
+		Execution::listUploads(ManageUploadsService listUploadsStart listUploadsFinish)
+
+		MessageEnd::getUploadSender(Administrator getUpload)
+		ExecutionEnd::getUploadStart(ManageUploadsService getUpload)
+		ExecutionEnd::getUploadFinish(ManageUploadsService getUpload)
+		MessageEnd::getUploadReturnReceiver(Administrator getUploadReturn)
+		MessageEnd::createUploadSender(Administrator createUpload)
+		ExecutionEnd::createUploadStart(ManageUploadsService createUpload)
+		ExecutionEnd::createUploadFinish(ManageUploadsService createUpload)
+		MessageEnd::createUploadReturnReceiver(Administrator createUploadReturn)
+		MessageEnd::deleteUploadSender(Administrator deleteUpload)
+		ExecutionEnd::deleteUploadStart(ManageUploadsService deleteUpload)
+		ExecutionEnd::deleteUploadFinish(ManageUploadsService deleteUpload)
+		MessageEnd::deleteUploadReturnReceiver(Administrator deleteUploadReturn)
+		MessageEnd::listUploadsSender(Administrator listUploads)
+		ExecutionEnd::listUploadsStart(ManageUploadsService listUploads)
+		ExecutionEnd::listUploadsFinish(ManageUploadsService listUploads)
+		MessageEnd::listUploadsReturnReceiver(Administrator listUploadsReturn)
+
+	}
+
+	Service ManageUploadsService {
+
+		[Operation]
+		getUpload(id)
+		createUpload(authorId)
+		deleteUpload(id)
+		listUploads(authorId, postId)
+
+	}
+
+	Service ManageApplicationsService {
+
+		[Operation]
+		getApp(id)
+		getApps()
+
+//		enablePlugin(id)
+//		disablePlugin(id)
+//		setTheme(id, style)
+//		getPlugins()
+//		getThemes()
+	}
+
+	Service ManageCategoriesService {
+
+		[Operation]
+		getCategory(id, alias, name)
+		createOrUpdateCategory(alias, name)
+		deleteCategory(id)
+		listCategories(type, manage, rootid, parentid)
+
+	}
+
+	Service ManageCommentsService {
+
+		[Operation]
+		getComment(id)
+		createComment(logId, authorId)
+		deleteComment(id)
+		listComments(manage, postId, authId, ischecking)
+		checkComment(id)
+		batchComment(batchData)
+
+	}
+
+	Service ManageMembersService {
+
+		[Operation]
+		login(username, password, savedate)
+		logout()
+		createOrUpdateMember(name)
+		getMember(id)
+		deleteMember(id)
+		listMembers(level, status)
+		getMemberAuth()
+
+	}
+
+	Service ManageModulesService {
+
+		[Operation]
+		getModule(id, filename)
+		createOrUpdateModule(fileName)
+		deleteModule(id)
+		listModules(type)
+		setSidebar(sidebarData)
+		listSidebar(id)
+
+	}
+
+	Service ManagePostsService {
+
+		[Operation]
+		getPost(id)
+		createOrUpdatePost(title)
+		deletePost(id)
+		listPosts(title, content, intro)
+
+	}
+
+	Service ManageSystemSettingsService {
+
+		[Operation]
+		getBasicInfo()
+		getSystemInfo()
+		clearCacheAndRecompile()
+		getCommonTags(type)
+		getSettings()
+		updateSettings(version)
+
+	}
+
+	Service ManageTagsService {
+
+		[Operation]
+		getTag(id, alias, name)
+		createOrUpdateTag(name)
+		deleteTag(id)
+		listTags(type, manage)
+
+	}
+
+	Service ZBlogSystem {
+
+	}
+
+	Service ThirdPartyServices {
+
+	}
+
+	Contract ManageApplicationsService::getApp(id : String) : App {
+
+		definition:
+			app:App = App.allInstance()->any(a:App | a.Id = id)
+
+		precondition:
+			app.oclIsUndefined() = false
+
+		postcondition:
+			result = app
+	}
+
+//	Contract ManageApplicationsService::enablePlugin(id : String) : Boolean {
+//
+//		definition:
+//			plugin:Plugin = Plugin.allInstance()->any(p:Plugin | p.id = id)
+//
+//		precondition:
+//			plugin.oclIsUndefined() = false
+//
+//		postcondition:
+//			plugin.isEnabled = true and
+//			result = true
+//	}
+//	Contract ManageApplicationsService::disablePlugin(id : String) : Boolean {
+//
+//		definition:
+//			plugin:Plugin = Plugin.allInstance()->any(p:Plugin | p.id = id)
+//
+//		precondition:
+//			plugin.oclIsUndefined() = false
+//
+//		postcondition:
+//			plugin.isEnabled = false and
+//			result = true
+//	}
+//	Contract ManageApplicationsService::setTheme(id : String, style : String) : Boolean {
+//
+//		definition:
+//			theme:Theme = Theme.allInstance()->any(t:Theme | t.id = id)
+//
+//		precondition:
+//			theme.oclIsUndefined() = false
+//
+//		postcondition:
+//			theme.style = style and
+//			result = true
+//	}
+	Contract ManageApplicationsService::getApps() : Set(App) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = App.allInstance()
+	}
+
+//	Contract ManageApplicationsService::getPlugins() : Set {
+//
+//		postcondition:
+//			result = Plugin.allInstance()
+//	}
+//
+//	Contract ManageApplicationsService::getThemes() : Set {
+//
+//		postcondition:
+//			result = Theme.allInstance()
+//	}
+	Contract ManageCategoriesService::getCategory(id : Integer, alias : String, name : String) : Category {
+
+		definition:
+			category:Category = Category.allInstance()->any(c:Category | c.Id = id or c.Alias = alias or c.Name = name)
+
+		precondition:
+			category.oclIsUndefined() = false
+
+		postcondition:
+			result = category
+	}
+
+	Contract ManageCategoriesService::createOrUpdateCategory(alias : String, name : String) : Boolean {
+
+		definition:
+			category:Category = Category.allInstance()->any(c:Category | c.Name = name and c.Alias = alias)
+
+		precondition:
+			category.oclIsUndefined() = true
+
+		postcondition:
+			let newCategory:Category in
+			newCategory.oclIsNew() and
+			newCategory.Name = name and
+			newCategory.Alias = alias and
+			Category.allInstance()->includes(newCategory) and
+			result = true
+	}
+
+	Contract ManageCategoriesService::deleteCategory(id : Integer) : Boolean {
+
+		definition:
+			category:Category = Category.allInstance()->any(c:Category | c.Id = id)
+
+		precondition:
+			category.oclIsUndefined() = false
+
+		postcondition:
+			Category.allInstance()->excludes(category) and
+			result = true
+	}
+
+	Contract ManageCategoriesService::listCategories(type : Integer, manage : Boolean, rootid : Integer, parentid : Integer) : Set(Category) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = Category.allInstance()->select(c:Category | c.Type = type and
+			c.RootId = rootid and
+			c.ParentId = parentid)
+	}
+
+	Contract ManageCommentsService::getComment(id : Integer) : Comment {
+
+		definition:
+			comment:Comment = Comment.allInstance()->any(c:Comment | c.Id = id)
+
+		precondition:
+			comment.oclIsUndefined() = false
+
+		postcondition:
+			result = comment
+	}
+
+	Contract ManageCommentsService::createComment(logId : Integer, authorId : Integer) : Boolean {
+
+		definition:
+			comment:Comment = Comment.allInstance()->any(c:Comment | c.LogId = logId and c.AuthorId = authorId)
+
+		precondition:
+			comment.oclIsUndefined() = true
+
+		postcondition:
+			let newComment:Comment in
+			newComment.oclIsNew() and
+			newComment.LogId = logId and
+			newComment.AuthorId = authorId and
+			Comment.allInstance()->includes(newComment) and
+			result = true
+	}
+
+	Contract ManageCommentsService::deleteComment(id : Integer) : Boolean {
+
+		definition:
+			comment:Comment = Comment.allInstance()->any(c:Comment | c.Id = id)
+
+		precondition:
+			comment.oclIsUndefined() = false
+
+		postcondition:
+			Comment.allInstance()->excludes(comment) and
+			result = true
+	}
+
+	Contract ManageCommentsService::listComments(manage : Boolean, postId : Integer, authId : Integer, ischecking : Boolean) : Set(Comment) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = Comment.allInstance()->select(c:Comment | c.LogId = postId and
+			c.AuthorId = authId and
+			c.IsChecking = ischecking)
+	}
+
+	Contract ManageCommentsService::checkComment(id : Integer) : Boolean {
+
+		definition:
+			comment:Comment = Comment.allInstance()->any(c:Comment | c.Id = id)
+
+		precondition:
+			comment.oclIsUndefined() = false
+
+		postcondition:
+			comment.IsChecking = false and
+			result = true
+	}
+
+	Contract ManageCommentsService::batchComment(batchData : Integer) : Boolean {
+
+		definition:
+			comments:Set(Comment) = Comment.allInstance()->select(c:Comment | c.Id=batchData)
+
+		precondition:
+			true
+
+		postcondition:
+			comments->forAll(c:Comment |
+				c.IsChecking = false)
+			and
+			result = true
+	}
+
+	Contract ManageMembersService::login(username : String, password : String, savedate : Date) : Member {
+
+		definition:
+			member:Member = Member.allInstance()->any(m:Member | m.Name = username and m.Password = password)
+
+		precondition:
+			member.oclIsUndefined() = false
+
+		postcondition:
+			result = member
+	}
+
+	Contract ManageMembersService::logout() : Boolean {
+
+		precondition:
+			true
+
+		postcondition:
+			result = true
+	}
+
+	Contract ManageMembersService::createOrUpdateMember(name : String) : Boolean {
+
+		definition:
+			member:Member = Member.allInstance()->any(m:Member | m.Name = name)
+
+		precondition:
+			member.oclIsUndefined() = true
+
+		postcondition:
+			let newMember:Member in
+			newMember.oclIsNew() and
+			newMember.Name = name and
+			Member.allInstance()->includes(newMember) and
+			result = true
+	}
+
+	Contract ManageMembersService::getMember(id : Integer) : Member {
+
+		definition:
+			member:Member = Member.allInstance()->any(m:Member | m.Id = id)
+
+		precondition:
+			member.oclIsUndefined() = false
+
+		postcondition:
+			result = member
+	}
+
+	Contract ManageMembersService::deleteMember(id : Integer) : Boolean {
+
+		definition:
+			member:Member = Member.allInstance()->any(m:Member | m.Id = id)
+
+		precondition:
+			member.oclIsUndefined() = false
+
+		postcondition:
+			Member.allInstance()->excludes(member) and
+			result = true
+	}
+
+	Contract ManageMembersService::listMembers(level : Integer, status : Integer) : Set(Member) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = Member.allInstance()->select(m:Member | m.Level = level and
+			m.Status = status)
+	}
+
+	Contract ManageMembersService::getMemberAuth() : Set(Member) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = Member.allInstance()
+	}
+
+	Contract ManageModulesService::getModule(id : Integer, filename : String) : AppModule {
+
+		definition:
+			module:AppModule = AppModule.allInstance()->any(m:AppModule | m.Id = id or m.FileName = filename)
+
+		precondition:
+			module.oclIsUndefined() = false
+
+		postcondition:
+			result = module
+	}
+
+	Contract ManageModulesService::createOrUpdateModule(fileName : String) : Boolean {
+
+		definition:
+			module:AppModule = AppModule.allInstance()->any(m:AppModule | m.FileName = fileName)
+
+		precondition:
+			module.oclIsUndefined() = true
+
+		postcondition:
+			let newModule:AppModule in
+			newModule.oclIsNew() and
+			newModule.FileName = fileName and
+			AppModule.allInstance()->includes(newModule) and
+			result = true
+	}
+
+	Contract ManageModulesService::deleteModule(id : Integer) : Boolean {
+
+		definition:
+			module:AppModule = AppModule.allInstance()->any(m:AppModule | m.Id = id)
+
+		precondition:
+			module.oclIsUndefined() = false
+
+		postcondition:
+			AppModule.allInstance()->excludes(module) and
+			result = true
+	}
+
+	Contract ManageModulesService::listModules(type : String) : Set(AppModule) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = AppModule.allInstance()->select(m:AppModule | m.SourceType = type)
+	}
+
+	Contract ManageModulesService::setSidebar(sidebarData : Integer) : Boolean {
+
+		definition:
+			modules:Set(AppModule) = AppModule.allInstance()->select(m:AppModule | m.Id=sidebarData)
+
+		precondition:
+			true
+
+		postcondition:
+			modules->forAll(m:AppModule |
+				m.NoRefresh = true)
+			and
+			result = true
+	}
+
+	Contract ManageModulesService::listSidebar(id : Integer) : Set(AppModule) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = AppModule.allInstance()->select(m:AppModule | m.Id = id)
+	}
+
+	Contract ManagePostsService::getPost(id : Integer) : Post {
+
+		definition:
+			post:Post = Post.allInstance()->any(p:Post | p.Id = id)
+
+		precondition:
+			post.oclIsUndefined() = false
+
+		postcondition:
+			result = post
+	}
+
+	Contract ManagePostsService::createOrUpdatePost(title : String) : Boolean {
+
+		definition:
+			post:Post = Post.allInstance()->any(p:Post | p.Title = title)
+
+		precondition:
+			post.oclIsUndefined() = true
+
+		postcondition:
+			let newPost:Post in
+			newPost.oclIsNew() and
+			newPost.Title = title and
+			Post.allInstance()->includes(newPost) and
+			result = true
+	}
+
+	Contract ManagePostsService::deletePost(id : Integer) : Boolean {
+
+		definition:
+			post:Post = Post.allInstance()->any(p:Post | p.Id = id)
+
+		precondition:
+			post.oclIsUndefined() = false
+
+		postcondition:
+			Post.allInstance()->excludes(post) and
+			result = true
+	}
+
+	Contract ManagePostsService::listPosts(title : String, content : String, intro : String) : Set(Post) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = Post.allInstance()->select(p:Post | p.Title = title or
+			p.Content = content or
+			p.Intro = intro)
+	}
+
+	Contract ManageSystemSettingsService::getBasicInfo() : Set(SystemSetting) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = SystemSetting.allInstance()
+	}
+
+	Contract ManageSystemSettingsService::getSystemInfo() : Set(SystemSetting) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = SystemSetting.allInstance()
+	}
+
+	Contract ManageSystemSettingsService::clearCacheAndRecompile() : Boolean {
+
+		precondition:
+			true
+
+		postcondition:
+			result = true
+	}
+
+	Contract ManageSystemSettingsService::getCommonTags(type : Integer) : Set(Tag) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = Tag.allInstance()->select(t:Tag | t.Type = type)
+	}
+
+	Contract ManageSystemSettingsService::getSettings() : Set(SystemSetting) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = SystemSetting.allInstance()
+	}
+
+	Contract ManageSystemSettingsService::updateSettings(version : String) : Boolean {
+
+		definition:
+			setting:SystemSetting = SystemSetting.allInstance()->any(s:SystemSetting | s.Name = "Z-BlogPHP")
+
+		precondition:
+			setting.oclIsUndefined() = false
+
+		postcondition:
+			setting.Version = version and
+			result = true
+	}
+
+	Contract ManageTagsService::getTag(id : Integer, alias : String, name : String) : Tag {
+
+		definition:
+			tag:Tag = Tag.allInstance()->any(t:Tag | t.Id = id or t.Alias = alias or t.Name = name)
+
+		precondition:
+			tag.oclIsUndefined() = false
+
+		postcondition:
+			result = tag
+	}
+
+	Contract ManageTagsService::createOrUpdateTag(name : String) : Boolean {
+
+		definition:
+			tag:Tag = Tag.allInstance()->any(t:Tag | t.Name = name)
+
+		precondition:
+			tag.oclIsUndefined() = true
+
+		postcondition:
+			let newTag:Tag in
+			newTag.oclIsNew() and
+			newTag.Name = name and
+			Tag.allInstance()->includes(newTag) and
+			result = true
+	}
+
+	Contract ManageTagsService::deleteTag(id : Integer) : Boolean {
+
+		definition:
+			tag:Tag = Tag.allInstance()->any(t:Tag | t.Id = id)
+
+		precondition:
+			tag.oclIsUndefined() = false
+
+		postcondition:
+			Tag.allInstance()->excludes(tag) and
+			result = true
+	}
+
+	Contract ManageTagsService::listTags(type : Integer, manage : Boolean) : Set(Tag) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = Tag.allInstance()->select(t:Tag | t.Type = type)
+	}
+
+	Contract ManageUploadsService::getUpload(id : Integer) : Upload {
+
+		definition:
+			upload:Upload = Upload.allInstance()->any(u:Upload | u.Id = id)
+
+		precondition:
+			upload.oclIsUndefined() = false
+
+		postcondition:
+			result = upload
+	}
+
+	Contract ManageUploadsService::createUpload(authorId : Integer) : Boolean {
+
+		definition:
+			upload:Upload = Upload.allInstance()->any(u:Upload | u.AuthorId = authorId)
+
+		precondition:
+			upload.oclIsUndefined() = true
+
+		postcondition:
+			let newUpload:Upload in
+			newUpload.oclIsNew() and
+			newUpload.AuthorId = authorId and
+			Upload.allInstance()->includes(newUpload) and
+			result = true
+	}
+
+	Contract ManageUploadsService::deleteUpload(id : Integer) : Boolean {
+
+		definition:
+			upload:Upload = Upload.allInstance()->any(u:Upload | u.Id = id)
+
+		precondition:
+			upload.oclIsUndefined() = false
+
+		postcondition:
+			Upload.allInstance()->excludes(upload) and
+			result = true
+	}
+
+	Contract ManageUploadsService::listUploads(authorId : Integer, postId : Integer) : Set(Upload) {
+
+		precondition:
+			true
+
+		postcondition:
+			result = Upload.allInstance()->select(u:Upload | u.AuthorId = authorId and
+			u.LogId = postId)
+	}
+
+}
+
+DomainModel ZBlog {
+
+	Entity SystemSetting {
+		@Description("Represents the SystemSetting settings and information for the Z-BlogPHP platform")
+        Name : String
+		Subname : String
+		Host : String
+		Version : String
+		Ajaxurl : String
+		XmlRpc : String
+		Cmdurl : String
+		Cookiespath : String
+		ManageCount : Integer
+		PagebarCount : Integer
+		SearchCount : Integer
+		DisplayCount : Integer
+		CommentDisplayCount : Integer
+		CommentTurnoff : Boolean
+		CommentVerifyEnable : Boolean
+		CommentReverseOrder : Boolean
+		Copyright : String
+		ApiDisplayCount : Integer
+		Zblogphp : String
+	}
+
+	Entity App {
+		@Description("Represents an application within the Z-BlogPHP SystemSetting, including its plugins and themes")
+        Id : String
+		Name : String
+		IsActived : Boolean
+//		[Refer]
+//		Themes : Theme* Association
+//        Plugins : Plugin* Association
+	}
+
+	Entity Category {
+		@Description("Represents a category within the Z-BlogPHP SystemSetting, used to organize posts")
+        Id : Integer
+		Name : String
+		Alias : String
+		Type : Integer
+		Order : Integer
+		Count : Integer
+		Group : String
+		RootId : Integer
+		ParentId : Integer
+
+		[Refer]
+		Posts : Post* Association
+	}
+
+	Entity Comment {
+		@Description("Represents a comment made on a post within the Z-BlogPHP SystemSetting")
+        Id : Integer
+		LogId : Integer
+		AuthorId : Integer
+		PostTime : Date
+		IsChecking : Boolean
+
+		[Refer]
+		Post : Post* Association
+		Author : Member* Association
+	}
+
+	Entity Member {
+		@Description("Represents a member of the Z-BlogPHP SystemSetting, including their posts and comments")
+        Id : Integer
+		Name : String
+		Password : String
+		Level : Integer
+		Status : Integer
+		CreateTime : Date
+		PostTime : Date
+		UpdateTime : Date
+		Articles : Integer
+		Pages : Integer
+		CommentCount : Integer
+		Uploads : Integer
+
+		[Refer]
+		Comments : Comment* Association
+		Posts : Post* Association
+	}
+
+	Entity AppModule {
+		@Description("Represents a AppModule within the Z-BlogPHP SystemSetting, which can be associated with sidebars")
+        Id : Integer
+		FileName : String
+		SourceType : String
+		NoRefresh : Boolean
+//		[Refer]
+//		Sidebars : Sidebar* Association
+	}
+
+	Entity Post {
+		@Description("Represents a post or page within the Z-BlogPHP SystemSetting, including its content and metadata")
+        Id : Integer
+		Title : String
+		Content : String
+		Intro : String
+		Type : Integer
+		Status : Integer
+		CreateTime : Date
+		PostTime : Date
+		UpdateTime : Date
+		CommNums : Integer
+		ViewNums : Integer
+
+		[Refer]
+		Author : Member* Association
+		Category : Category* Association
+		Tags : Tag* Association
+		Comments : Comment* Association
+	}
+
+	Entity Tag {
+		@Description("Represents a tag used to categorize posts within the Z-BlogPHP SystemSetting")
+        Id : Integer
+		Name : String
+		Alias : String
+		Type : Integer
+		Order : Integer
+		Count : Integer
+
+		[Refer]
+		Posts : Post* Association
+	}
+
+	Entity Upload {
+		@Description("Represents an uploaded file within the Z-BlogPHP SystemSetting, including its metadata")
+        Id : Integer
+		AuthorId : Integer
+		LogId : Integer
+		PostTime : Date
+		DownNums : Integer
+
+		[Refer]
+		Author : Member* Association
+		Post : Post* Association
+	}
+
+}
+

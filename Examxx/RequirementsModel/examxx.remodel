@@ -1,0 +1,690 @@
+UseCaseModel Examxx {
+
+	UC::studentLogin
+	UC::teacherLogin
+	UC::examManagement definedBySSD(ExamManagementSSD) relatedService(ExamManagementService)
+	UC::questionManagement definedBySSD(QuestionManagementSSD) relatedService(QuestionManagementService)
+	UC::practice definedBySSD(PracticeSSD) relatedService(PracticeService)
+	UC::userManagement definedBySSD(UserManagementSSD) relatedService(UserManagementService)
+	UC::knowledgePointManagement definedBySSD(KnowledgePointManagementSSD) relatedService(KnowledgePointManagementService)
+	UC::examHistoryManagement definedBySSD(ExamHistoryManagementSSD) relatedService(ExamHistoryManagementService)
+
+	Actor User("User") {
+	}
+
+	Actor Teacher("Teacher") extends User {
+		teacherLogin
+		examManagement
+		questionManagement
+		knowledgePointManagement
+	}
+
+	Actor Student("Student") extends User {
+		studentLogin
+		practice
+	}
+
+	Actor Administrator("Admintstrator") {
+		userManagement
+	}
+
+	Interaction ExamManagementSSD {
+
+		[Participants: Teacher ExamManagementService]
+
+		CallMessage::ExamManagementSSDCallMessage1(addExamPaper ExamManagementSSDCallMessage1SendingEnd -> ExamManagementSSDExecution1StartEnd)
+		ReturnMessage::ExamManagementSSDCallMessage1Return(ExamManagementSSDExecution1FinishEnd -> ExamManagementSSDCallMessage1ReturnReceivingEnd ExamManagementSSDCallMessage1)
+		CallMessage::ExamManagementSSDCallMessage3(addQuestionToExamPaper ExamManagementSSDCallMessage3SendingEnd -> ExamManagementSSDExecution2StartEnd)
+		ReturnMessage::ExamManagementSSDCallMessage3Return(ExamManagementSSDExecution2FinishEnd -> ExamManagementSSDCallMessage3ReturnReceivingEnd ExamManagementSSDCallMessage3)
+		CallMessage::ExamManagementSSDCallMessage5(getExamPaperById ExamManagementSSDCallMessage5SendingEnd -> ExamManagementSSDExecution3StartEnd)
+		ReturnMessage::ExamManagementSSDCallMessage5Return(ExamManagementSSDExecution3FinishEnd -> ExamManagementSSDCallMessage5ReturnReceivingEnd ExamManagementSSDCallMessage5)
+		CallMessage::ExamManagementSSDCallMessage7(deleteExamPaper ExamManagementSSDCallMessage7SendingEnd -> ExamManagementSSDExecution4StartEnd)
+		ReturnMessage::ExamManagementSSDCallMessage7Return(ExamManagementSSDExecution4FinishEnd -> ExamManagementSSDCallMessage7ReturnReceivingEnd ExamManagementSSDCallMessage7)
+
+		Execution::ExamManagementSSDExecution1(ExamManagementService ExamManagementSSDExecution1StartEnd ExamManagementSSDExecution1FinishEnd)
+		Execution::ExamManagementSSDExecution2(ExamManagementService ExamManagementSSDExecution2StartEnd ExamManagementSSDExecution2FinishEnd)
+		Execution::ExamManagementSSDExecution3(ExamManagementService ExamManagementSSDExecution3StartEnd ExamManagementSSDExecution3FinishEnd)
+		Execution::ExamManagementSSDExecution4(ExamManagementService ExamManagementSSDExecution4StartEnd ExamManagementSSDExecution4FinishEnd)
+
+		CombinedFragment:: combinedFragement2 -> loop {
+
+			[Participants: ExamManagementService Teacher]
+
+			combinedFragement2StartEnd -> combinedFragement2FinishEnd
+
+			Operand::hasMoreQuestions(condition3End combinedFragement2FinishEnd)
+		}
+
+		MessageEnd::ExamManagementSSDCallMessage1SendingEnd(Teacher ExamManagementSSDCallMessage1)
+		ExecutionEnd::ExamManagementSSDExecution1StartEnd(ExamManagementService ExamManagementSSDExecution1)
+		ExecutionEnd::ExamManagementSSDExecution1FinishEnd(ExamManagementService ExamManagementSSDExecution1)
+		MessageEnd::ExamManagementSSDCallMessage1ReturnReceivingEnd(Teacher ExamManagementSSDCallMessage1Return)
+		CombinedFragmentEnd::combinedFragement2StartEnd(combinedFragement2)
+		OperandEnd::condition3End(hasMoreQuestions)
+		MessageEnd::ExamManagementSSDCallMessage3SendingEnd(Teacher ExamManagementSSDCallMessage3)
+		ExecutionEnd::ExamManagementSSDExecution2StartEnd(ExamManagementService ExamManagementSSDExecution2)
+		ExecutionEnd::ExamManagementSSDExecution2FinishEnd(ExamManagementService ExamManagementSSDExecution2)
+		MessageEnd::ExamManagementSSDCallMessage3ReturnReceivingEnd(Teacher ExamManagementSSDCallMessage3Return)
+		CombinedFragmentEnd::combinedFragement2FinishEnd(combinedFragement2)
+		MessageEnd::ExamManagementSSDCallMessage5SendingEnd(Teacher ExamManagementSSDCallMessage5)
+		ExecutionEnd::ExamManagementSSDExecution3StartEnd(ExamManagementService ExamManagementSSDExecution3)
+		ExecutionEnd::ExamManagementSSDExecution3FinishEnd(ExamManagementService ExamManagementSSDExecution3)
+		MessageEnd::ExamManagementSSDCallMessage5ReturnReceivingEnd(Teacher ExamManagementSSDCallMessage5Return)
+		MessageEnd::ExamManagementSSDCallMessage7SendingEnd(Teacher ExamManagementSSDCallMessage7)
+		ExecutionEnd::ExamManagementSSDExecution4StartEnd(ExamManagementService ExamManagementSSDExecution4)
+		ExecutionEnd::ExamManagementSSDExecution4FinishEnd(ExamManagementService ExamManagementSSDExecution4)
+		MessageEnd::ExamManagementSSDCallMessage7ReturnReceivingEnd(Teacher ExamManagementSSDCallMessage7Return)
+
+	}
+
+	Interaction QuestionManagementSSD {
+
+		[Participants: Teacher QuestionManagementService]
+
+		CallMessage::QuestionManagementSSDCallMessage1(addQuestion QuestionManagementSSDCallMessage1SendingEnd -> QuestionManagementSSDExecution1StartEnd)
+		ReturnMessage::QuestionManagementSSDCallMessage1Return(QuestionManagementSSDExecution1FinishEnd -> QuestionManagementSSDCallMessage1ReturnReceivingEnd QuestionManagementSSDCallMessage1)
+		CallMessage::QuestionManagementSSDCallMessage3(addKnowledgePointToQuestion QuestionManagementSSDCallMessage3SendingEnd -> QuestionManagementSSDExecution2StartEnd)
+		ReturnMessage::QuestionManagementSSDCallMessage3Return(QuestionManagementSSDExecution2FinishEnd -> QuestionManagementSSDCallMessage3ReturnReceivingEnd QuestionManagementSSDCallMessage3)
+		CallMessage::QuestionManagementSSDCallMessage5(getAllQuestion QuestionManagementSSDCallMessage5SendingEnd -> QuestionManagementSSDExecution3StartEnd)
+		ReturnMessage::QuestionManagementSSDCallMessage5Return(QuestionManagementSSDExecution3FinishEnd -> QuestionManagementSSDCallMessage5ReturnReceivingEnd QuestionManagementSSDCallMessage5)
+		CallMessage::QuestionManagementSSDCallMessage7(getQuestionById QuestionManagementSSDCallMessage7SendingEnd -> QuestionManagementSSDExecution4StartEnd)
+		ReturnMessage::QuestionManagementSSDCallMessage7Return(QuestionManagementSSDExecution4FinishEnd -> QuestionManagementSSDCallMessage7ReturnReceivingEnd QuestionManagementSSDCallMessage7)
+		CallMessage::QuestionManagementSSDCallMessage9(getQuestionKnowledgePointsByQuestionId QuestionManagementSSDCallMessage9SendingEnd -> QuestionManagementSSDExecution5StartEnd)
+		ReturnMessage::QuestionManagementSSDCallMessage9Return(QuestionManagementSSDExecution5FinishEnd -> QuestionManagementSSDCallMessage9ReturnReceivingEnd QuestionManagementSSDCallMessage9)
+
+		Execution::QuestionManagementSSDExecution1(QuestionManagementService QuestionManagementSSDExecution1StartEnd QuestionManagementSSDExecution1FinishEnd)
+		Execution::QuestionManagementSSDExecution2(QuestionManagementService QuestionManagementSSDExecution2StartEnd QuestionManagementSSDExecution2FinishEnd)
+		Execution::QuestionManagementSSDExecution3(QuestionManagementService QuestionManagementSSDExecution3StartEnd QuestionManagementSSDExecution3FinishEnd)
+		Execution::QuestionManagementSSDExecution4(QuestionManagementService QuestionManagementSSDExecution4StartEnd QuestionManagementSSDExecution4FinishEnd)
+		Execution::QuestionManagementSSDExecution5(QuestionManagementService QuestionManagementSSDExecution5StartEnd QuestionManagementSSDExecution5FinishEnd)
+
+		CombinedFragment:: combinedFragement3 -> loop {
+
+			[Participants: QuestionManagementService Teacher]
+
+			combinedFragement3StartEnd -> combinedFragement3FinishEnd
+
+			Operand::hasMoreKnowledgementPoints(condition4End combinedFragement3FinishEnd)
+		}
+
+		MessageEnd::QuestionManagementSSDCallMessage1SendingEnd(Teacher QuestionManagementSSDCallMessage1)
+		ExecutionEnd::QuestionManagementSSDExecution1StartEnd(QuestionManagementService QuestionManagementSSDExecution1)
+		ExecutionEnd::QuestionManagementSSDExecution1FinishEnd(QuestionManagementService QuestionManagementSSDExecution1)
+		MessageEnd::QuestionManagementSSDCallMessage1ReturnReceivingEnd(Teacher QuestionManagementSSDCallMessage1Return)
+		CombinedFragmentEnd::combinedFragement3StartEnd(combinedFragement3)
+		OperandEnd::condition4End(hasMoreKnowledgementPoints)
+		MessageEnd::QuestionManagementSSDCallMessage3SendingEnd(Teacher QuestionManagementSSDCallMessage3)
+		ExecutionEnd::QuestionManagementSSDExecution2StartEnd(QuestionManagementService QuestionManagementSSDExecution2)
+		ExecutionEnd::QuestionManagementSSDExecution2FinishEnd(QuestionManagementService QuestionManagementSSDExecution2)
+		MessageEnd::QuestionManagementSSDCallMessage3ReturnReceivingEnd(Teacher QuestionManagementSSDCallMessage3Return)
+		CombinedFragmentEnd::combinedFragement3FinishEnd(combinedFragement3)
+		MessageEnd::QuestionManagementSSDCallMessage5SendingEnd(Teacher QuestionManagementSSDCallMessage5)
+		ExecutionEnd::QuestionManagementSSDExecution3StartEnd(QuestionManagementService QuestionManagementSSDExecution3)
+		ExecutionEnd::QuestionManagementSSDExecution3FinishEnd(QuestionManagementService QuestionManagementSSDExecution3)
+		MessageEnd::QuestionManagementSSDCallMessage5ReturnReceivingEnd(Teacher QuestionManagementSSDCallMessage5Return)
+		MessageEnd::QuestionManagementSSDCallMessage7SendingEnd(Teacher QuestionManagementSSDCallMessage7)
+		ExecutionEnd::QuestionManagementSSDExecution4StartEnd(QuestionManagementService QuestionManagementSSDExecution4)
+		ExecutionEnd::QuestionManagementSSDExecution4FinishEnd(QuestionManagementService QuestionManagementSSDExecution4)
+		MessageEnd::QuestionManagementSSDCallMessage7ReturnReceivingEnd(Teacher QuestionManagementSSDCallMessage7Return)
+		MessageEnd::QuestionManagementSSDCallMessage9SendingEnd(Teacher QuestionManagementSSDCallMessage9)
+		ExecutionEnd::QuestionManagementSSDExecution5StartEnd(QuestionManagementService QuestionManagementSSDExecution5)
+		ExecutionEnd::QuestionManagementSSDExecution5FinishEnd(QuestionManagementService QuestionManagementSSDExecution5)
+		MessageEnd::QuestionManagementSSDCallMessage9ReturnReceivingEnd(Teacher QuestionManagementSSDCallMessage9Return)
+
+	}
+
+	Interaction PracticeSSD {
+
+		[Participants: Student PracticeService]
+
+		CallMessage::PracticeSSDCallMessage1(makeNewExam PracticeSSDCallMessage1SendingEnd -> PracticeSSDExecution1StartEnd)
+		ReturnMessage::PracticeSSDCallMessage1Return(PracticeSSDExecution1FinishEnd -> PracticeSSDCallMessage1ReturnReceivingEnd PracticeSSDCallMessage1)
+		CallMessage::PracticeSSDCallMessage3(viewQuestions PracticeSSDCallMessage3SendingEnd -> PracticeSSDExecution2StartEnd)
+		ReturnMessage::PracticeSSDCallMessage3Return(PracticeSSDExecution2FinishEnd -> PracticeSSDCallMessage3ReturnReceivingEnd PracticeSSDCallMessage3)
+		CallMessage::PracticeSSDCallMessage5(enterAnswer PracticeSSDCallMessage5SendingEnd -> PracticeSSDExecution3StartEnd)
+		ReturnMessage::PracticeSSDCallMessage5Return(PracticeSSDExecution3FinishEnd -> PracticeSSDCallMessage5ReturnReceivingEnd PracticeSSDCallMessage5)
+		CallMessage::PracticeSSDCallMessage7(finish PracticeSSDCallMessage7SendingEnd -> PracticeSSDExecution4StartEnd)
+		ReturnMessage::PracticeSSDCallMessage7Return(PracticeSSDExecution4FinishEnd -> PracticeSSDCallMessage7ReturnReceivingEnd PracticeSSDCallMessage7)
+
+		Execution::PracticeSSDExecution1(PracticeService PracticeSSDExecution1StartEnd PracticeSSDExecution1FinishEnd)
+		Execution::PracticeSSDExecution2(PracticeService PracticeSSDExecution2StartEnd PracticeSSDExecution2FinishEnd)
+		Execution::PracticeSSDExecution3(PracticeService PracticeSSDExecution3StartEnd PracticeSSDExecution3FinishEnd)
+		Execution::PracticeSSDExecution4(PracticeService PracticeSSDExecution4StartEnd PracticeSSDExecution4FinishEnd)
+
+		CombinedFragment:: combinedFragement4 -> loop {
+
+			[Participants: PracticeService Student]
+
+			combinedFragement4StartEnd -> combinedFragement4FinishEnd
+
+			Operand::isFinish(condition5End combinedFragement4FinishEnd)
+		}
+
+		MessageEnd::PracticeSSDCallMessage1SendingEnd(Student PracticeSSDCallMessage1)
+		ExecutionEnd::PracticeSSDExecution1StartEnd(PracticeService PracticeSSDExecution1)
+		ExecutionEnd::PracticeSSDExecution1FinishEnd(PracticeService PracticeSSDExecution1)
+		MessageEnd::PracticeSSDCallMessage1ReturnReceivingEnd(Student PracticeSSDCallMessage1Return)
+		MessageEnd::PracticeSSDCallMessage3SendingEnd(Student PracticeSSDCallMessage3)
+		ExecutionEnd::PracticeSSDExecution2StartEnd(PracticeService PracticeSSDExecution2)
+		ExecutionEnd::PracticeSSDExecution2FinishEnd(PracticeService PracticeSSDExecution2)
+		MessageEnd::PracticeSSDCallMessage3ReturnReceivingEnd(Student PracticeSSDCallMessage3Return)
+		CombinedFragmentEnd::combinedFragement4StartEnd(combinedFragement4)
+		OperandEnd::condition5End(isFinish)
+		MessageEnd::PracticeSSDCallMessage5SendingEnd(Student PracticeSSDCallMessage5)
+		ExecutionEnd::PracticeSSDExecution3StartEnd(PracticeService PracticeSSDExecution3)
+		ExecutionEnd::PracticeSSDExecution3FinishEnd(PracticeService PracticeSSDExecution3)
+		MessageEnd::PracticeSSDCallMessage5ReturnReceivingEnd(Student PracticeSSDCallMessage5Return)
+		CombinedFragmentEnd::combinedFragement4FinishEnd(combinedFragement4)
+		MessageEnd::PracticeSSDCallMessage7SendingEnd(Student PracticeSSDCallMessage7)
+		ExecutionEnd::PracticeSSDExecution4StartEnd(PracticeService PracticeSSDExecution4)
+		ExecutionEnd::PracticeSSDExecution4FinishEnd(PracticeService PracticeSSDExecution4)
+		MessageEnd::PracticeSSDCallMessage7ReturnReceivingEnd(Student PracticeSSDCallMessage7Return)
+
+	}
+
+	Interaction UserManagementSSD {
+
+		[Participants: Administrator UserManagementService]
+
+		CallMessage::UserManagementSSDCallMessage1(addStudent UserManagementSSDCallMessage1SendingEnd -> UserManagementSSDExecution1StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage1Return(UserManagementSSDExecution1FinishEnd -> UserManagementSSDCallMessage1ReturnReceivingEnd UserManagementSSDCallMessage1)
+		CallMessage::UserManagementSSDCallMessage3(addTeacher UserManagementSSDCallMessage3SendingEnd -> UserManagementSSDExecution2StartEnd)
+		ReturnMessage::UserManagementSSDCallMessage3Return(UserManagementSSDExecution2FinishEnd -> UserManagementSSDCallMessage3ReturnReceivingEnd UserManagementSSDCallMessage3)
+
+		Execution::UserManagementSSDExecution1(UserManagementService UserManagementSSDExecution1StartEnd UserManagementSSDExecution1FinishEnd)
+		Execution::UserManagementSSDExecution2(UserManagementService UserManagementSSDExecution2StartEnd UserManagementSSDExecution2FinishEnd)
+
+		MessageEnd::UserManagementSSDCallMessage1SendingEnd(Administrator UserManagementSSDCallMessage1)
+		ExecutionEnd::UserManagementSSDExecution1StartEnd(UserManagementService UserManagementSSDExecution1)
+		ExecutionEnd::UserManagementSSDExecution1FinishEnd(UserManagementService UserManagementSSDExecution1)
+		MessageEnd::UserManagementSSDCallMessage1ReturnReceivingEnd(Administrator UserManagementSSDCallMessage1Return)
+		MessageEnd::UserManagementSSDCallMessage3SendingEnd(Administrator UserManagementSSDCallMessage3)
+		ExecutionEnd::UserManagementSSDExecution2StartEnd(UserManagementService UserManagementSSDExecution2)
+		ExecutionEnd::UserManagementSSDExecution2FinishEnd(UserManagementService UserManagementSSDExecution2)
+		MessageEnd::UserManagementSSDCallMessage3ReturnReceivingEnd(Administrator UserManagementSSDCallMessage3Return)
+
+	}
+
+	Interaction KnowledgePointManagementSSD {
+
+		[Participants: Teacher KnowledgePointManagementService]
+
+		CallMessage::KnowledgePointManagementSSDCallMessage1(addKnowledgePoint KnowledgePointManagementSSDCallMessage1SendingEnd -> KnowledgePointManagementSSDExecution1StartEnd)
+		ReturnMessage::KnowledgePointManagementSSDCallMessage1Return(KnowledgePointManagementSSDExecution1FinishEnd -> KnowledgePointManagementSSDCallMessage1ReturnReceivingEnd KnowledgePointManagementSSDCallMessage1)
+		CallMessage::KnowledgePointManagementSSDCallMessage3(getKnowledgePointByName KnowledgePointManagementSSDCallMessage3SendingEnd -> KnowledgePointManagementSSDExecution2StartEnd)
+		ReturnMessage::KnowledgePointManagementSSDCallMessage3Return(KnowledgePointManagementSSDExecution2FinishEnd -> KnowledgePointManagementSSDCallMessage3ReturnReceivingEnd KnowledgePointManagementSSDCallMessage3)
+		CallMessage::KnowledgePointManagementSSDCallMessage5(getKnowledgePointById KnowledgePointManagementSSDCallMessage5SendingEnd -> KnowledgePointManagementSSDExecution3StartEnd)
+		ReturnMessage::KnowledgePointManagementSSDCallMessage5Return(KnowledgePointManagementSSDExecution3FinishEnd -> KnowledgePointManagementSSDCallMessage5ReturnReceivingEnd KnowledgePointManagementSSDCallMessage5)
+
+		Execution::KnowledgePointManagementSSDExecution1(KnowledgePointManagementService KnowledgePointManagementSSDExecution1StartEnd KnowledgePointManagementSSDExecution1FinishEnd)
+		Execution::KnowledgePointManagementSSDExecution2(KnowledgePointManagementService KnowledgePointManagementSSDExecution2StartEnd KnowledgePointManagementSSDExecution2FinishEnd)
+		Execution::KnowledgePointManagementSSDExecution3(KnowledgePointManagementService KnowledgePointManagementSSDExecution3StartEnd KnowledgePointManagementSSDExecution3FinishEnd)
+
+		MessageEnd::KnowledgePointManagementSSDCallMessage1SendingEnd(Teacher KnowledgePointManagementSSDCallMessage1)
+		ExecutionEnd::KnowledgePointManagementSSDExecution1StartEnd(KnowledgePointManagementService KnowledgePointManagementSSDExecution1)
+		ExecutionEnd::KnowledgePointManagementSSDExecution1FinishEnd(KnowledgePointManagementService KnowledgePointManagementSSDExecution1)
+		MessageEnd::KnowledgePointManagementSSDCallMessage1ReturnReceivingEnd(Teacher KnowledgePointManagementSSDCallMessage1Return)
+		MessageEnd::KnowledgePointManagementSSDCallMessage3SendingEnd(Teacher KnowledgePointManagementSSDCallMessage3)
+		ExecutionEnd::KnowledgePointManagementSSDExecution2StartEnd(KnowledgePointManagementService KnowledgePointManagementSSDExecution2)
+		ExecutionEnd::KnowledgePointManagementSSDExecution2FinishEnd(KnowledgePointManagementService KnowledgePointManagementSSDExecution2)
+		MessageEnd::KnowledgePointManagementSSDCallMessage3ReturnReceivingEnd(Teacher KnowledgePointManagementSSDCallMessage3Return)
+		MessageEnd::KnowledgePointManagementSSDCallMessage5SendingEnd(Teacher KnowledgePointManagementSSDCallMessage5)
+		ExecutionEnd::KnowledgePointManagementSSDExecution3StartEnd(KnowledgePointManagementService KnowledgePointManagementSSDExecution3)
+		ExecutionEnd::KnowledgePointManagementSSDExecution3FinishEnd(KnowledgePointManagementService KnowledgePointManagementSSDExecution3)
+		MessageEnd::KnowledgePointManagementSSDCallMessage5ReturnReceivingEnd(Teacher KnowledgePointManagementSSDCallMessage5Return)
+
+	}
+
+	Interaction ExamHistoryManagementSSD {
+
+		[Participants: Student ExamHistoryManagementService]
+
+		CallMessage::ExamHistoryManagementSSDCallMessage1(getExamHistory ExamHistoryManagementSSDCallMessage1SendingEnd -> ExamHistoryManagementSSDExecution1StartEnd)
+		ReturnMessage::ExamHistoryManagementSSDCallMessage1Return(ExamHistoryManagementSSDExecution1FinishEnd -> ExamHistoryManagementSSDCallMessage1ReturnReceivingEnd ExamHistoryManagementSSDCallMessage1)
+
+		Execution::ExamHistoryManagementSSDExecution1(ExamHistoryManagementService ExamHistoryManagementSSDExecution1StartEnd ExamHistoryManagementSSDExecution1FinishEnd)
+
+		MessageEnd::ExamHistoryManagementSSDCallMessage1SendingEnd(Student ExamHistoryManagementSSDCallMessage1)
+		ExecutionEnd::ExamHistoryManagementSSDExecution1StartEnd(ExamHistoryManagementService ExamHistoryManagementSSDExecution1)
+		ExecutionEnd::ExamHistoryManagementSSDExecution1FinishEnd(ExamHistoryManagementService ExamHistoryManagementSSDExecution1)
+		MessageEnd::ExamHistoryManagementSSDCallMessage1ReturnReceivingEnd(Student ExamHistoryManagementSSDCallMessage1Return)
+
+	}
+
+	Service ExamHistoryManagementService {
+
+		[Operation]
+		getExamHistory()
+
+	}
+
+	Service ExamManagementService {
+
+		[Operation]
+		addExamPaper(examPaperId, title)
+		getExamPaperById(examPaperId)
+		addQuestionToExamPaper(examPaperId, questionId)
+		deleteExamPaper(examPaperId)
+
+	}
+
+	Service PracticeService {
+
+		[Operation]
+		makeNewExam(examPaperId)
+		viewQuestions()
+		enterAnswer(questionId, answer)
+		finish(examHistoryId, completionDate)
+
+		[TempProperty]
+		Paper : ExamPaper
+		Score : Integer
+
+	}
+
+	Service QuestionManagementService {
+
+		[Operation]
+		addQuestion(questionId, content, answer, score, difficulty)
+		addKnowledgePointToQuestion(questionId, knowledgePointId)
+		getAllQuestion()
+		getQuestionById(questionId)
+		getQuestionKnowledgePointsByQuestionId(questionId)
+
+	}
+
+	Service KnowledgePointManagementService {
+
+		[Operation]
+		addKnowledgePoint(knowledgePointId, knowledgePointName)
+		getKnowledgePointByName(knowledgePointName)
+		getKnowledgePointById(knowledgePointId)
+
+	}
+
+	Service UserManagementService {
+
+		[Operation]
+		addStudent(userId, userName, password, email)
+		addTeacher(userId, userName, password, email)
+
+	}
+
+	Service ThirdPartyServices {
+
+	}
+
+	Service ExamxxSystem {
+
+		[Operation]
+		studentLogin(userId, password)
+		teacherLogin(userId, password)
+
+		[TempProperty]
+		LoginStudent : Student
+		LoginTeacher : Teacher
+
+	}
+
+	Contract ExamxxSystem::studentLogin(userId : String, password : String) : Boolean {
+
+		definition :
+			student:Student = Student.allInstance()->any(s:Student | s.UserId = userId and s.Password = password)
+
+		precondition:
+			student.oclIsUndefined() = false
+		postcondition:
+			LoginStudent = student and
+			result = true
+	}
+
+	Contract ExamxxSystem::teacherLogin(userId : String, password : String) : Boolean {
+
+		definition :
+			teacher:Teacher = Teacher.allInstance()->any(t:Teacher | t.UserId = userId and t.Password = password)
+
+		precondition:
+			teacher.oclIsUndefined() = false
+		postcondition:
+			LoginTeacher = teacher and
+			result = true
+	}
+
+	Contract ExamManagementService::addExamPaper(examPaperId : String, title : String) : Boolean {
+
+		definition :
+			paper:ExamPaper = ExamPaper.allInstance()->any(e:ExamPaper | e.ExamPaperId = examPaperId)
+
+		precondition:
+			paper.oclIsUndefined() = true and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			let e:ExamPaper in
+			e.oclIsNew() and
+			e.ExamPaperId = examPaperId and
+			e.Title = title and
+			e.Teacher = LoginTeacher and
+			LoginTeacher.ExamPapers->includes(e) and
+			ExamPaper.allInstance()->includes(e) and
+			result = true
+	}
+
+	Contract ExamManagementService::getExamPaperById(examPaperId : String) : ExamPaper {
+
+		definition :
+			paper:ExamPaper = ExamPaper.allInstance()->any(e:ExamPaper | e.ExamPaperId = examPaperId)
+
+		precondition:
+			paper.oclIsUndefined() = false and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			result = paper
+	}
+
+	Contract ExamManagementService::addQuestionToExamPaper(examPaperId : String, questionId : String) : Boolean {
+
+		definition :
+			question:Question = Question.allInstance()->any(q:Question | q.QuestionId = questionId),
+			paper:ExamPaper = ExamPaper.allInstance()->any(e:ExamPaper | e.ExamPaperId = examPaperId)
+
+		precondition:
+			question.oclIsUndefined() = false and
+			paper.oclIsUndefined() = false and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			paper.Questions->includes(question) and
+			result = true
+	}
+
+	Contract ExamHistoryManagementService::getExamHistory() : Sequence ( ExamHistory ) {
+
+		precondition:
+			LoginStudent.oclIsUndefined() = false
+		postcondition:
+			result = LoginStudent.ExamHistories
+	}
+
+	Contract ExamManagementService::deleteExamPaper(examPaperId : String) : Boolean {
+
+		definition :
+			paper:ExamPaper = LoginTeacher.ExamPapers->any(e:ExamPaper | e.ExamPaperId = examPaperId)
+
+		precondition:
+			paper.oclIsUndefined() = false and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			ExamPaper.allInstance()->excludes(paper) and
+			LoginTeacher.ExamPapers->excludes(paper) and
+			result = true
+	}
+
+	Contract PracticeService::makeNewExam(examPaperId : String) : Boolean {
+
+		definition :
+			paper:ExamPaper = ExamPaper.allInstance()->any(e:ExamPaper | e.ExamPaperId = examPaperId)
+
+		precondition:
+			paper.oclIsUndefined() = false and
+			LoginStudent.oclIsUndefined() = false
+		postcondition:
+			self.Paper = paper and
+			self.Score = 0 and
+			result = true
+	}
+
+	Contract PracticeService::viewQuestions() : Sequence ( Question ) {
+
+		precondition:
+			self.Paper.oclIsUndefined() = false
+		postcondition:
+			result = self.Paper.Questions
+	}
+
+	Contract PracticeService::enterAnswer(questionId : String, answer : String) : Boolean {
+
+		definition :
+			question:Question = Paper.Questions->any(q:Question | q.QuestionId = questionId)
+
+		precondition:
+			self.Paper.oclIsUndefined() = false and
+			question.oclIsUndefined() = false
+		postcondition:
+			if
+				question.Answer = answer
+			then
+				self.Score = self.Score + question.Score and
+				result = true
+			else
+				result = true
+			endif
+	}
+
+	Contract PracticeService::finish(examHistoryId : String, completionDate : Date) : Integer {
+
+		precondition:
+			self.Paper.oclIsUndefined() = false and
+			LoginStudent.oclIsUndefined() = false
+		postcondition:
+			let e:ExamHistory in
+			e.oclIsNew() and
+			e.ExamHistoryId = examHistoryId and
+			e.Score = self.Score and
+			e.CompletionDate = completionDate and
+			e.ExamPaper = self.Paper and
+			ExamHistory.allInstance()->includes(e) and
+			LoginStudent.ExamHistories->includes(e) and
+			result = e.Score
+	}
+
+	Contract UserManagementService::addStudent(userId : String, userName : String, password : String, email : String) : Boolean {
+
+		definition :
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = true
+		postcondition:
+			let s:Student in
+			s.oclIsNew() and
+			s.UserId = userId and
+			s.UserName = userName and
+			s.Password = password and
+			s.Email = email and
+			Student.allInstance()->includes(s) and
+			User.allInstance()->includes(s) and
+			result = true
+	}
+
+	Contract UserManagementService::addTeacher(userId : String, userName : String, password : String, email : String) : Boolean {
+
+		definition :
+			user:User = User.allInstance()->any(u:User | u.UserId = userId)
+
+		precondition:
+			user.oclIsUndefined() = true
+		postcondition:
+			let t:Teacher in
+			t.oclIsNew() and
+			t.UserId = userId and
+			t.UserName = userName and
+			t.Password = password and
+			t.Email = email and
+			Teacher.allInstance()->includes(t) and
+			User.allInstance()->includes(t) and
+			result = true
+	}
+
+	Contract QuestionManagementService::getAllQuestion() : Sequence ( Question ) {
+
+		precondition:
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			result = Question.allInstance()
+	}
+
+	Contract QuestionManagementService::addQuestion(questionId : String, content : String, answer : String, score : Integer, difficulty : Integer) : Boolean {
+
+		definition :
+			question:Question = Question.allInstance()->any(q:Question | q.QuestionId = questionId)
+
+		precondition:
+			question.oclIsUndefined() = true and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			let q:Question in
+			q.oclIsNew() and
+			q.QuestionId = questionId and
+			q.Content = content and
+			q.Difficulty = difficulty and
+			q.Answer = answer and
+			q.Score = score and
+			q.Teacher = LoginTeacher and
+			LoginTeacher.Questions->includes(q) and
+			Question.allInstance()->includes(q) and
+			result = true
+	}
+
+	Contract QuestionManagementService::getQuestionKnowledgePointsByQuestionId(questionId : String) : Sequence ( KnowledgePoint ) {
+
+		definition :
+			question:Question = Question.allInstance()->any(q:Question | q.QuestionId = questionId)
+
+		precondition:
+			question.oclIsUndefined() = false and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			result = question.KnowledgePoints
+	}
+
+	Contract QuestionManagementService::getQuestionById(questionId : String) : Question {
+
+		definition :
+			question:Question = Question.allInstance()->any(q:Question | q.QuestionId = questionId)
+
+		precondition:
+			question.oclIsUndefined() = false and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			result = question
+	}
+
+	Contract KnowledgePointManagementService::getKnowledgePointById(knowledgePointId : String) : KnowledgePoint {
+
+		definition :
+			knowledgePoint:KnowledgePoint = KnowledgePoint.allInstance()->any(k:KnowledgePoint | k.KnowledgePointId = knowledgePointId)
+
+		precondition:
+			knowledgePoint.oclIsUndefined() = false and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			result = knowledgePoint
+	}
+
+	Contract KnowledgePointManagementService::getKnowledgePointByName(knowledgePointName : String) : Sequence ( KnowledgePoint ) {
+
+		definition :
+			knowledgePoints:Sequence(KnowledgePoint) = KnowledgePoint.allInstance()->select(k:KnowledgePoint | k.KnowledgePointName = knowledgePointName)
+
+		precondition:
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			result = knowledgePoints
+	}
+
+	Contract KnowledgePointManagementService::addKnowledgePoint(knowledgePointId : String, knowledgePointName : String) : Boolean {
+
+		definition :
+			knowledgePoint:KnowledgePoint = KnowledgePoint.allInstance()->any(k:KnowledgePoint | k.KnowledgePointId = knowledgePointId)
+
+		precondition:
+			knowledgePoint.oclIsUndefined() = true and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			let k:KnowledgePoint in
+			k.oclIsNew() and
+			k.KnowledgePointId = knowledgePointId and
+			k.KnowledgePointName = knowledgePointName and
+			KnowledgePoint.allInstance()->includes(k) and
+			result = true
+	}
+
+	Contract QuestionManagementService::addKnowledgePointToQuestion(questionId : String, knowledgePointId : String) : Boolean {
+
+		definition :
+			question:Question = Question.allInstance()->any(q:Question | q.QuestionId = questionId),
+			knowledgePoint:KnowledgePoint = KnowledgePoint.allInstance()->any(k:KnowledgePoint | k.KnowledgePointId = knowledgePointId)
+
+		precondition:
+			question.oclIsUndefined() = false and
+			knowledgePoint.oclIsUndefined() = false and
+			LoginTeacher.oclIsUndefined() = false
+		postcondition:
+			question.KnowledgePoints->includes(knowledgePoint) and
+			result = true
+	}
+
+}
+
+DomainModel Examxx {
+
+	Entity ExamHistory {
+		ExamHistoryId : String
+		Score : Integer
+		CompletionDate : Date
+
+		[Refer]
+		ExamPaper : ExamPaper Association
+		Student : Student Association
+		[INV]
+		inv ScoreRange: self.Score>=0
+	}
+
+	Entity ExamPaper {
+		ExamPaperId : String
+		Title : String
+
+		[Refer]
+		Questions : Question* Association
+		Teacher : Teacher Association
+	}
+
+	Entity Question {
+		QuestionId : String
+		Content : String
+		Answer : String
+		Score : Integer
+		Difficulty : Integer
+
+		[Refer]
+		KnowledgePoints : KnowledgePoint* Association
+		Teacher : Teacher Association
+		[INV] 
+		inv ValidDifficultyRange : self.Difficulty >= 1 and self.Difficulty <= 5
+		inv ValidScoreRange : self.Score >= 0 and self.Score <= 100
+	}
+
+	Entity KnowledgePoint {
+		KnowledgePointId : String
+		KnowledgePointName : String
+	}
+
+	Entity User {
+		UserId : String
+		UserName : String
+		Password : String
+		Email : String
+	}
+
+	Entity Student extends User {
+		[Refer]
+		ExamHistories : ExamHistory* Association
+	}
+
+	Entity Teacher extends User {
+		[Refer]
+		Questions : Question* Association
+		ExamPapers : ExamPaper* Association
+	}
+
+}
+
